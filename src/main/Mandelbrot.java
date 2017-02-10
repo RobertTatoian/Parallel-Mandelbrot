@@ -15,9 +15,13 @@ public class Mandelbrot {
 //		for (double i = -2; i < 2; i = i + 0.0001f) {
 //			m.setPixelAt(i,Math.sin(i),16777215);
 //		}
-//		m.writeImage();
+		m.setPixelAt(1f,1f,16_777_215);
+		m.setPixelAt(1f,-1f,16_777_215);
+		m.setPixelAt(-1f,-1f,16_777_215);
+		m.setPixelAt(-1f,-1f,16_777_215);
+		m.writeImage();
 
-		createMandelBrot();
+//		createMandelBrot();
 	}
 
 	public void evaluateAt(float z) {
@@ -56,7 +60,7 @@ public class Mandelbrot {
 					System.out.println(c + " diverged in " + j + " iterations.");
 					diverged = true;
 					break;
-				} else {
+				} else if (j == 9999){
 					m.setPixelAt(c,Fx,200);
 				}
 				i = Fx;

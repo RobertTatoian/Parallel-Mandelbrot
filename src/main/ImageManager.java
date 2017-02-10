@@ -44,8 +44,8 @@ public class ImageManager {
 
 	public void writeImage() {
 
-		imageFile = new File("/Users/roberttatoian/Desktop/file.png");
-
+		//imageFile = new File("/Users/roberttatoian/Desktop/file.png");
+		imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
 		iioImageWrapper = new IIOImage(bufferedImage, null, null);
 		try {
 			ImageIO.write(iioImageWrapper.getRenderedImage(), "png", imageFile);
