@@ -6,16 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-            //System.out.print("Enter a number: ");
+    	ComplexNumber complexNumber = new ComplexNumber();
 
-            //Scanner in = new Scanner(System.in);
+    	Mandelbrot mandelbrot = new Mandelbrot(complexNumber);
 
-            Mandelbrot set = new Mandelbrot(0);
-
-            //System.out.print("Enter a number: ");
-
-            //set.evaluateAt(in.nextFloat());
-
-            //set.isInSet();
     }
 }
