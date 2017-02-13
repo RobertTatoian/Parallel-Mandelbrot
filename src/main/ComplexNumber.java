@@ -38,10 +38,22 @@ public class ComplexNumber {
 		return new ComplexNumber(this.real - complexNumber.getReal(), this.imaginary - complexNumber.getImaginary());
 	}
 
+	ComplexNumber multiply(ComplexNumber complexNumber){
+
+		return multiply(this, complexNumber);
+	}
+
+	static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {
+
+		return new ComplexNumber(a.getReal() * b.getReal() - a.getImaginary() * b.getImaginary(), a.getReal() * b.getImaginary() + a.getImaginary() * b.getReal());
+	}
+
 	ComplexNumber square(){
-		double im = this.real * this.imaginary + this.real * this.imaginary;
-		double re = this.real * this.real - this.imaginary * this.imaginary;
-		return new ComplexNumber(re,im);
+
+		double real = this.real * this.real - this.imaginary * this.imaginary;
+		double imaginary = this.real * this.imaginary + this.real * this.imaginary;
+
+		return new ComplexNumber(real, imaginary);
 	}
 
 	double getReal() {
