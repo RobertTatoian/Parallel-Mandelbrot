@@ -15,8 +15,7 @@ class Mandelbrot {
 		int imageHeight = 1080;
 
 		imageManager = new ImageManager(imageWidth, imageHeight);
-		c.setReal(-2);
-		c.setImaginary(2);
+
 		this.c = c;
 
 		iterateMandelbrot();
@@ -25,8 +24,6 @@ class Mandelbrot {
 	private void iterateMandelbrot() {
 		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < 1080; j++) {
-				double mandelbrotValueX, mandelbrotValueY = 0;
-				double z = 0;
 				for (int k = 0; k < 1001; k++) {
 
 				}

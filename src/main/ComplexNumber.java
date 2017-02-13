@@ -9,12 +9,12 @@ import java.lang.Math;
 public class ComplexNumber {
 
 	/**
-	 * Stores the x as the real part.
+	 * Stores the real part of the complex number.
 	 */
 	private double real;
 
 	/**
-	 * Stores the y as the imaginary part.
+	 * Stores the imaginary part of the complex number.
 	 */
 	private double imaginary;
 
