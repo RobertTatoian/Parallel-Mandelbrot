@@ -1,16 +1,14 @@
 package main;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 
 /**
  * Created by Robert Tatoian on 2/9/17.
  */
-public class ImageManager {
+class ImageManager {
 
 	private int imageWidth;
 	private int imageHeight;
@@ -31,31 +29,21 @@ public class ImageManager {
 		}
 	}
 
-	int getWidthScale(){
-		return imageWidth/2;
+	double scalePixelXToReal (int imageX) {
+		return (imageX - (imageWidth / 2f)) * (1f / (imageWidth / 4f));
 	}
 
-	int getHeightScale() {
-		return imageHeight/2;
-	}
-
-	public int getImageWidth() {
-		return imageWidth;
-	}
-
-	public int getImageHeight() {
-		return imageHeight;
+	double scalePixelYToImaginary (int imageY) {
+		return (imageY - (imageHeight / 2f)) * (1f / (imageHeight / 4f));
 	}
 	void setPixelAt(double x, double y, int color) {
 
-		double imageX = ((imageWidth/2) * x + imageWidth/2);
-		double imageY =  -1 * ((imageHeight/2) * y + - imageHeight/2);
+		double imageX = (959/2) * x + 959;
+		double imageY = -1 * (539 / 2 * y + - 539);
 
-		System.out.println("The x coordinate is: " + imageX + "\nThe y coordinate is: " + imageY + "\nThe color is: " + color);
+		System.out.println("The x coordinate is: " + imageX + "\nThe y coordinate is: " + imageY);
 
 		bufferedImage.setRGB((int)imageX, (int)imageY, color);
-
-		//System.out.println(bufferedImage.getRGB((int)imageX, (int)imageY));
 
 	}
 
@@ -65,7 +53,9 @@ public class ImageManager {
 		imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
 		setPixelAt(-2,0,16711680);
 		setPixelAt(0,-2,16711680);
-		setPixelAt(1.99999999,0,16711680);
+		setPixelAt(2,0,16711680);
+		setPixelAt(0,2,16711680);
+		//setPixelAt(1.99999999,0,16711680);
 		iioImageWrapper = new IIOImage(bufferedImage, null, null);
 		try {
 			ImageIO.write(iioImageWrapper.getRenderedImage(), "png", imageFile);

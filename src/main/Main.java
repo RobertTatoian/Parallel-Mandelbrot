@@ -6,9 +6,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-    	ComplexNumber complexNumber = new ComplexNumber();
+    	ComplexNumber complexNumber = new ComplexNumber(4,8);
 
-    	Mandelbrot mandelbrot = new Mandelbrot(complexNumber);
+	    complexNumber = complexNumber.square();
+
+    	System.out.println(complexNumber.getReal() + " " + complexNumber.getImaginary());
+
+    	//Mandelbrot mandelbrot = new Mandelbrot(complexNumber);
 
     }
 }
