@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
+		Mandelbrot mandelbrot = new Mandelbrot(new ComplexNumber());
 
-    	//Mandelbrot mandelbrot = new Mandelbrot(complexNumber);
+		mandelbrot.testMandelbrot(new ComplexNumber(0, 0));
+		mandelbrot.testMandelbrot(new ComplexNumber(.1, 0));
 
-    }
+	}
 }

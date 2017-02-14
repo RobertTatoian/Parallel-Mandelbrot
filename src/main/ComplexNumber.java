@@ -28,19 +28,29 @@ public class ComplexNumber {
 		this.imaginary = imaginary;
 	}
 
-	ComplexNumber add(ComplexNumber complexNumber){
+	ComplexNumber add(ComplexNumber complexNumber) {
 
-		return new ComplexNumber(this.real + complexNumber.getReal(), this.imaginary + complexNumber.getImaginary());
+		return add(this, complexNumber);
 	}
 
-	ComplexNumber subtract(ComplexNumber complexNumber){
+	ComplexNumber subtract(ComplexNumber complexNumber) {
 
-		return new ComplexNumber(this.real - complexNumber.getReal(), this.imaginary - complexNumber.getImaginary());
+		return subtract(this, complexNumber);
 	}
 
-	ComplexNumber multiply(ComplexNumber complexNumber){
+	ComplexNumber multiply(ComplexNumber complexNumber) {
 
 		return multiply(this, complexNumber);
+	}
+
+	static ComplexNumber add(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
+
+		return new ComplexNumber(complexNumber1.getReal() + complexNumber2.getReal(), complexNumber1.getImaginary() + complexNumber2.getImaginary());
+	}
+
+	static ComplexNumber subtract(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
+
+		return new ComplexNumber(complexNumber1.getReal() - complexNumber2.getReal(), complexNumber1.getImaginary() - complexNumber2.getImaginary());
 	}
 
 	static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {
@@ -48,7 +58,7 @@ public class ComplexNumber {
 		return new ComplexNumber(a.getReal() * b.getReal() - a.getImaginary() * b.getImaginary(), a.getReal() * b.getImaginary() + a.getImaginary() * b.getReal());
 	}
 
-	ComplexNumber square(){
+	ComplexNumber square() {
 
 		double real = this.real * this.real - this.imaginary * this.imaginary;
 		double imaginary = this.real * this.imaginary + this.real * this.imaginary;
