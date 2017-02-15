@@ -8,8 +8,8 @@ public class Main {
 
 		Mandelbrot mandelbrot = new Mandelbrot(new ComplexNumber());
 
-		mandelbrot.testMandelbrot(new ComplexNumber(0, 0));
-		mandelbrot.testMandelbrot(new ComplexNumber(.1, 0));
+		//mandelbrot.testBehavior(new ComplexNumber(0, 0));
+		//mandelbrot.testBehavior(new ComplexNumber(1000, 1000));
 
 	}
 }

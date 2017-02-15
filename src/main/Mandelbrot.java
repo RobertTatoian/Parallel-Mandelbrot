@@ -1,7 +1,5 @@
 package main;
 
-import static main.ComplexNumber.add;
-
 /**
  * Created by Robert Tatoian on 2/8/17.
  * This class handles the calculation of the Mandelbrot set.
@@ -13,39 +11,24 @@ class Mandelbrot {
 
 	Mandelbrot(ComplexNumber c) {
 
-		int imageWidth = 1920;
-		int imageHeight = 1080;
+		int imageWidth = 1000;
+		int imageHeight = 1000;
 
 		imageManager = new ImageManager(imageWidth, imageHeight);
 
 		this.c = c;
 
-		//iterateMandelbrot();
+		iterateMandelbrot();
 	}
 
 	private void iterateMandelbrot() {
+		//imageManager.getImageHeight()
+		//imageManager.getImageWidth()
 		for (int i = 0; i < imageManager.getImageHeight(); i++) {
 			c.setImaginary(imageManager.scalePixelYToImaginary(i));
-			for (int j = 1; j < imageManager.getImageWidth(); j++) {
-				ComplexNumber z = new ComplexNumber();
-				ComplexNumber m;
+			for (int j = 0; j < imageManager.getImageWidth(); j++) {
 				c.setReal(imageManager.scalePixelXToReal(j));
-				m = add(z.square(), c);
-				for (int k = 0; k < 5001; k++) {
-					if (!isInMandelbrot(m)) {
-						//System.out.println("The c:" + c.getReal() + " + " + c.getImaginary() + "i " + "diverges.");
-						break;
-					}
-					else {
-						z = m;
-						m = add(z.square(), c);
-					}
-
-					if (k == 5000) {
-						//System.out.println("The c:" + c.getReal() + " + " + c.getImaginary() + "i " + "diverges.");
-						imageManager.setPixelAt(m.getReal(), m.getImaginary(), 0);
-					}
-				}
+				testBehavior(c, j, i);
 			}
 		}
 
@@ -53,39 +36,33 @@ class Mandelbrot {
 
 	}
 
-	void testMandelbrot(ComplexNumber c) {
+	void testBehavior(ComplexNumber c, int i , int j) {
 		ComplexNumber z = new ComplexNumber();
 		ComplexNumber m;
-		m = add(z.square(), c);
+		m = ComplexNumber.add(z.square(), c);
 		for (int k = 0; k < 5001; k++) {
+			//System.out.println("=========");
 			if (!isInMandelbrot(m)) {
-				System.out.println("The c:" + c.getReal() + " + " + c.getImaginary() + "i " + "diverges after " + k + " iterations.");
+				//System.out.println("The c:" + c.getReal() + " + " + c.getImaginary() + "i " + "diverges after " + k + " iterations.");
+				imageManager.setPixelAt(i,j,13_200_215);
 				break;
 			}
 			else {
+				m = ComplexNumber.add(z.square(), c);
 				z = m;
-				m = add(z.square(), c);
 			}
 			if (k == 5000) {
-				System.out.println("The c:" + c.getReal() + " + " + c.getImaginary() + "i " + " is in the mandelbrot set.");
-				imageManager.setPixelAt(m.getReal(), m.getImaginary(), 0);
+				//System.out.println("The c:" + c.getReal() + " + " + c.getImaginary() + "i " + " is in the mandelbrot set.");
+				imageManager.setPixelAt(i,j, 0);
 			}
+			//System.out.println("=========");
 		}
 	}
 
 	private boolean isInMandelbrot(ComplexNumber mComplex) {
-		double realM = mComplex.getReal();
-		double complexM = mComplex.getImaginary();
 
-		if (realM > 2 || realM < -2) {
-			return false;
-		}
-		else if (complexM > 2 || complexM < -2) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		//System.out.println("The magnitude is: " + mComplex.magnitude());
+		return !(mComplex.magnitude() > 2);
 
 	}
 

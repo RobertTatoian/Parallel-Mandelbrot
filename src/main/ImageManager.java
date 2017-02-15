@@ -7,15 +7,13 @@ import javax.imageio.ImageIO;
 
 /**
  * Created by Robert Tatoian on 2/9/17.
+ *
  */
 class ImageManager {
 
 	private int imageWidth;
 	private int imageHeight;
 	private BufferedImage bufferedImage;
-
-	private IIOImage iioImageWrapper;
-	private File imageFile;
 
 	ImageManager(int width, int height) {
 		this.imageWidth = width;
@@ -34,45 +32,45 @@ class ImageManager {
 	}
 
 	double scalePixelYToImaginary(int imageY) {
-		return (imageY - (imageHeight / 2f)) * (1f / (imageHeight / 4f));
+		return -1 * (imageY - (imageHeight / 2f)) * (1f / (imageHeight / 4f));
 	}
 
 	void setPixelAt(double x, double y, int color) {
 
-		System.out.println("The x coordinate is: " + x + "\nThe y coordinate is: " + y);
+		//System.out.println("The x coordinate is: " + x + "\nThe y coordinate is: " + y);
 
-		double imageX = ((imageWidth / 2) / 2) * x + (imageWidth / 2);
-		double imageY = -1 * (((imageHeight / 2) / 2) * y + -(imageHeight / 2));
+		double imageX = x;
+		double imageY = y;
 
-		System.out.println("The pixel x coordinate is: " + (int) imageX + "\nThe pixel y coordinate is: " + (int) imageY);
+		//System.out.println("The pixel x coordinate is: " + (int) imageX + "\nThe pixel y coordinate is: " + (int) imageY);
 
 		try {
-			bufferedImage.setRGB((int) imageX, (int) imageY, color);
+			bufferedImage.setRGB((int)Math.round(imageX), (int)Math.round(imageY), color);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 	}
 
-	public int getImageWidth() {
+	int getImageWidth() {
 		return imageWidth;
 	}
 
-	public int getImageHeight() {
+	int getImageHeight() {
 		return imageHeight;
 	}
 
-	public void writeImage() {
+	void writeImage() {
 
-		imageFile = new File("/Users/roberttatoian/Desktop/file.png");
+		File imageFile = new File("/Users/roberttatoian/Desktop/file.png");
 		//imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
 //		setPixelAt(-2,0,16711680);
 //		setPixelAt(0,-2,16711680);
 //		setPixelAt(2,0,16711680);
 //		setPixelAt(0,2,16711680);
 //		//setPixelAt(1.99999999,0,16711680);
-		iioImageWrapper = new IIOImage(bufferedImage, null, null);
+		IIOImage iioImageWrapper = new IIOImage(bufferedImage, null, null);
 		try {
 			ImageIO.write(iioImageWrapper.getRenderedImage(), "png", imageFile);
 		}

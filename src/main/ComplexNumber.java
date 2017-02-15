@@ -66,6 +66,14 @@ public class ComplexNumber {
 		return new ComplexNumber(real, imaginary);
 	}
 
+	double magnitude() {
+
+		double real = this.real * this.real;
+		double imaginary = this.imaginary * this.imaginary;
+
+		return Math.sqrt(real + imaginary);
+	}
+
 	double getReal() {
 		return real;
 	}
