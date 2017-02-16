@@ -17,7 +17,6 @@ class Mandelbrot {
 	Mandelbrot(ImageManager imageManager) {
 		this.imageManager = imageManager;
 	}
-<<<<<<< HEAD
 
 	void iterateMandelbrot() {
 
@@ -25,13 +24,6 @@ class Mandelbrot {
 
 		ComplexNumber c = new ComplexNumber();
 
-=======
-
-	void iterateMandelbrot() {
-
-		ComplexNumber c = new ComplexNumber();
-
->>>>>>> origin/master
 		for (int i = 0; i < imageManager.getImageHeight(); i++) {
 			c.setImaginary(imageManager.scalePixelYToImaginary(i));
 			for (int j = 0; j < imageManager.getImageWidth(); j++) {

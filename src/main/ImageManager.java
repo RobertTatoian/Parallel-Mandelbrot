@@ -54,7 +54,6 @@ class ImageManager {
 		return bufferedImage;
 	}
 
-<<<<<<< HEAD
 	public boolean isFinishedDrawingImage() {
 		return isFinishedDrawingImage;
 	}
@@ -62,8 +61,6 @@ class ImageManager {
 	public void setFinishedDrawingImage(boolean finishedDrawingImage) {
 		isFinishedDrawingImage = finishedDrawingImage;
 	}
-=======
->>>>>>> origin/master
 
 	void writeImage() {
 

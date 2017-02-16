@@ -15,6 +15,7 @@ public class UserInterface {
 	private JButton savePlot;
 	private JButton zoomIn;
 	private JButton zoomOut;
+
 	private ImageManager imageManager;
 
 	public UserInterface(ImageManager imageManager) {
@@ -47,6 +48,7 @@ public class UserInterface {
 		final JPanel spacer1 = new JPanel();
 		GridBagConstraints gbc;
 		gbc = new GridBagConstraints();
+
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.fill = GridBagConstraints.VERTICAL;
@@ -63,6 +65,7 @@ public class UserInterface {
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+
 		gbc.gridheight = 3;
 		gbc.insets = new Insets(10, 10, 0, 0);
 		rootPanel.add(mandelbrotViewer1, gbc);
@@ -90,6 +93,9 @@ public class UserInterface {
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
 		rootPanel.add(panel1, gbc);
+
+		rootPanel.add(mandelbrotViewer1, gbc);
+
 	}
 
 	/**
