@@ -1,15 +1,20 @@
 package main;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		Mandelbrot mandelbrot = new Mandelbrot(new ComplexNumber());
+		int imageWidth = 2000;
+		int imageHeight = 2000;
+		ImageManager imageManager = new ImageManager(imageWidth, imageHeight);
 
-		//mandelbrot.testBehavior(new ComplexNumber(0, 0));
-		//mandelbrot.testBehavior(new ComplexNumber(1000, 1000));
+		Mandelbrot mandelbrot = new Mandelbrot(imageManager);
+		mandelbrot.iterateMandelbrot();
+		UserInterface gui = new UserInterface(imageManager);
+
 
 	}
 }

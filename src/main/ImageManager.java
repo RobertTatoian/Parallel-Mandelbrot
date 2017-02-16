@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 
 /**
  * Created by Robert Tatoian on 2/9/17.
- *
  */
 class ImageManager {
 
@@ -15,10 +14,14 @@ class ImageManager {
 	private int imageHeight;
 	private BufferedImage bufferedImage;
 
+
+
+	private boolean isFinishedDrawingImage = false;
+
 	ImageManager(int width, int height) {
 		this.imageWidth = width;
 		this.imageHeight = height;
-		bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
+		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
 
 		for (int i = 0; i < imageWidth; i++) {
 			for (int j = 0; j < imageHeight; j++) {
@@ -36,21 +39,7 @@ class ImageManager {
 	}
 
 	void setPixelAt(double x, double y, int color) {
-
-		//System.out.println("The x coordinate is: " + x + "\nThe y coordinate is: " + y);
-
-		double imageX = x;
-		double imageY = y;
-
-		//System.out.println("The pixel x coordinate is: " + (int) imageX + "\nThe pixel y coordinate is: " + (int) imageY);
-
-		try {
-			bufferedImage.setRGB((int)Math.round(imageX), (int)Math.round(imageY), color);
-		}
-		catch (Exception e) {
-			//e.printStackTrace();
-		}
-
+			bufferedImage.setRGB((int) Math.round(x), (int) Math.round(y), color);
 	}
 
 	int getImageWidth() {
@@ -61,15 +50,26 @@ class ImageManager {
 		return imageHeight;
 	}
 
+	public BufferedImage getBufferedImage() {
+		return bufferedImage;
+	}
+
+<<<<<<< HEAD
+	public boolean isFinishedDrawingImage() {
+		return isFinishedDrawingImage;
+	}
+
+	public void setFinishedDrawingImage(boolean finishedDrawingImage) {
+		isFinishedDrawingImage = finishedDrawingImage;
+	}
+=======
+>>>>>>> origin/master
+
 	void writeImage() {
 
 		File imageFile = new File("/Users/roberttatoian/Desktop/file.png");
 		//imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
-//		setPixelAt(-2,0,16711680);
-//		setPixelAt(0,-2,16711680);
-//		setPixelAt(2,0,16711680);
-//		setPixelAt(0,2,16711680);
-//		//setPixelAt(1.99999999,0,16711680);
+
 		IIOImage iioImageWrapper = new IIOImage(bufferedImage, null, null);
 		try {
 			ImageIO.write(iioImageWrapper.getRenderedImage(), "png", imageFile);
@@ -77,5 +77,6 @@ class ImageManager {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 }
