@@ -1,8 +1,5 @@
 package main;
 
-import java.util.Random;
-import java.util.Timer;
-
 /**
  * Created by Robert Tatoian on 2/8/17.
  * This class handles the calculation of the Mandelbrot set.
@@ -18,21 +15,20 @@ class Mandelbrot {
 		this.imageManager = imageManager;
 	}
 
-	void iterateMandelbrot() {
+	void iterateMandelbrot(double scaleX, double scaleY, double panX, double panY) {
 
 		imageManager.setFinishedDrawingImage(false);
 
 		ComplexNumber c = new ComplexNumber();
 
 		for (int i = 0; i < imageManager.getImageHeight(); i++) {
-			c.setImaginary(imageManager.scalePixelYToImaginary(i));
+			c.setImaginary(imageManager.scalePixelYToImaginary(i) * scaleY + panY);
 			for (int j = 0; j < imageManager.getImageWidth(); j++) {
-				c.setReal(imageManager.scalePixelXToReal(j));
+				c.setReal(imageManager.scalePixelXToReal(j) * scaleX + panX);
 				testBehavior(c, j, i);
 			}
 		}
 		imageManager.setFinishedDrawingImage(true);
-		imageManager.writeImage();
 
 	}
 

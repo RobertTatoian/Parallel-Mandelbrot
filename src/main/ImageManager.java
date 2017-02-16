@@ -59,6 +59,7 @@ class ImageManager {
 	}
 
 	public void setFinishedDrawingImage(boolean finishedDrawingImage) {
+		System.out.println("Finished drawing the image.");
 		isFinishedDrawingImage = finishedDrawingImage;
 	}
 

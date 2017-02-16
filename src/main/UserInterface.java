@@ -3,13 +3,15 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
  * Created by roberttatoian on 2/15/17.
  */
-public class UserInterface {
+public class UserInterface implements ActionListener {
 
+	private JFrame frame;
 	private JPanel rootPanel;
 	private MandelbrotViewer mandelbrotViewer1;
 	private JButton savePlot;
@@ -20,17 +22,46 @@ public class UserInterface {
 
 	public UserInterface(ImageManager imageManager) {
 		this.imageManager = imageManager;
-		JFrame frame = new JFrame("Mandelbrot Set");
+		frame = new JFrame("Mandelbrot Set");
 		$$$setupUI$$$();
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setContentPane(rootPanel);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+
+		zoomIn.setActionCommand("zoomin");
+		zoomIn.addActionListener(this);
+
+		zoomOut.setActionCommand("zoomout");
+		zoomOut.addActionListener(this);
+
+		savePlot.setActionCommand("save");
+		savePlot.addActionListener(this);
 	}
 
 	private void createUIComponents() {
 		mandelbrotViewer1 = new MandelbrotViewer(imageManager);
+	}
+
+	/**
+	 * Invoked when an action occurs.
+	 *
+	 * @param e
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if ("zoomin".equals(e.getActionCommand())) {
+			System.out.print("Zoom In");
+		}
+		else if ("zoomout".equals(e.getActionCommand())) {
+			System.out.print("Zoom Out");
+		}
+		else if ("save".equals(e.getActionCommand())) {
+			//String fileLocation
+			//		= (String) JOptionPane.showInputDialog(frame, "Where should the image be written to?", "Save File", JOptionPane.QUESTION_MESSAGE, null, null, null);
+			imageManager.writeImage();
+		}
 	}
 
 	/**
@@ -45,26 +76,28 @@ public class UserInterface {
 		rootPanel = new JPanel();
 		rootPanel.setLayout(new GridBagLayout());
 		rootPanel.setMaximumSize(new Dimension(1024, 1024));
+		rootPanel.setPreferredSize(new Dimension(512, 512));
 		final JPanel spacer1 = new JPanel();
 		GridBagConstraints gbc;
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		gbc.fill = GridBagConstraints.VERTICAL;
 		rootPanel.add(spacer1, gbc);
 		savePlot = new JButton();
 		savePlot.setText("Save Plot");
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		rootPanel.add(savePlot, gbc);
+		mandelbrotViewer1.setMaximumSize(new Dimension(1000, 1000));
 		mandelbrotViewer1.setMinimumSize(new Dimension(256, 256));
 		mandelbrotViewer1.setPreferredSize(new Dimension(512, 512));
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridheight = 3;
+		gbc.gridheight = 4;
 		gbc.insets = new Insets(10, 10, 0, 0);
 		rootPanel.add(mandelbrotViewer1, gbc);
 		zoomIn = new JButton();
@@ -84,13 +117,6 @@ public class UserInterface {
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		rootPanel.add(zoomOut, gbc);
-		final JPanel panel1 = new JPanel();
-		panel1.setLayout(new BorderLayout(0, 0));
-		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.BOTH;
-		rootPanel.add(panel1, gbc);
 	}
 
 	/**
