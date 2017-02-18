@@ -27,21 +27,44 @@ public class UserInterface implements ActionListener {
 
 	public UserInterface() {
 
+		JFrame.setDefaultLookAndFeelDecorated(true);
+
 		imageManager = new ImageManager(2000, 2000);
 		mandelbrotSerial = new Serial(imageManager);
 
 		frame = new JFrame("Serial Set");
+		JMenuBar menuBar = new JMenuBar();
+
+		//Adding functionality to the JMenuBar
+		JMenu implementation = new JMenu("Implementation");
+		menuBar.add(implementation);
+
+		ButtonGroup implementationGroup = new ButtonGroup();
+		JRadioButtonMenuItem serialItem = new JRadioButtonMenuItem("Serial");
+		serialItem.setSelected(true);
+		implementationGroup.add(serialItem);
+		serialItem.setActionCommand("serial");
+		serialItem.addActionListener(this);
+		implementation.add(serialItem);
+
+		JRadioButtonMenuItem parallelItem = new JRadioButtonMenuItem("Parallel");
+		parallelItem.setSelected(false);
+		implementationGroup.add(parallelItem);
+		parallelItem.setActionCommand("parallel");
+		parallelItem.addActionListener(this);
+		implementation.add(parallelItem);
+
+
 
 		//Auto-Created function by Intellij
 		$$$setupUI$$$();
-
-		JFrame.setDefaultLookAndFeelDecorated(true);
 
 		frame.setContentPane(rootPanel);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 
+		frame.setJMenuBar(menuBar);
 		zoomIn.setActionCommand("zoomin");
 		zoomIn.addActionListener(this);
 
@@ -63,19 +86,28 @@ public class UserInterface implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if ("zoomin".equals(e.getActionCommand())) {
-			System.out.print("Zoom In");
+
+		switch (e.getActionCommand()) {
+			case "zoomin":
+				mandelbrotViewer1.repaint();
+				break;
+			case "zoomout":
+				mandelbrotViewer1.repaint();
+				break;
+			case "serial":
+				mandelbrotViewer1.repaint();
+				break;
+			case "parallel":
+				mandelbrotViewer1.repaint();
+				break;
+			case "save":
+				mandelbrotViewer1.repaint();
+				break;
+			default:
+				System.err.println("There was an uncovered action command.");
+				break;
 		}
-		else if ("zoomout".equals(e.getActionCommand())) {
-			System.out.print("Zoom Out");
-			mandelbrotSerial.iterateMandelbrot(1, 1, 0, 0);
-		}
-		else if ("save".equals(e.getActionCommand())) {
-			//String fileLocation
-			//		= (String) JOptionPane.showInputDialog(frame, "Where should the image be written to?", "Save File", JOptionPane.QUESTION_MESSAGE, null, null, null);
-			//imageManager.writeImage();
-			mandelbrotViewer1.repaint();
-		}
+
 	}
 
 	/**
