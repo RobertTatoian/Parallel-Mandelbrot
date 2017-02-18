@@ -1,4 +1,4 @@
-package main;
+package mandelbrot;
 
 import java.lang.Math;
 
@@ -18,47 +18,47 @@ public class ComplexNumber {
 	 */
 	private double imaginary;
 
-	ComplexNumber() {
+	public ComplexNumber() {
 		this.real = 0;
 		this.imaginary = 0;
 	}
 
-	ComplexNumber(double real, double imaginary) {
+	public ComplexNumber(double real, double imaginary) {
 		this.real = real;
 		this.imaginary = imaginary;
 	}
 
-	ComplexNumber add(ComplexNumber complexNumber) {
+	public ComplexNumber add(ComplexNumber complexNumber) {
 
 		return add(this, complexNumber);
 	}
 
-	ComplexNumber subtract(ComplexNumber complexNumber) {
+	public ComplexNumber subtract(ComplexNumber complexNumber) {
 
 		return subtract(this, complexNumber);
 	}
 
-	ComplexNumber multiply(ComplexNumber complexNumber) {
+	public ComplexNumber multiply(ComplexNumber complexNumber) {
 
 		return multiply(this, complexNumber);
 	}
 
-	static ComplexNumber add(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
+	public static ComplexNumber add(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
 
 		return new ComplexNumber(complexNumber1.getReal() + complexNumber2.getReal(), complexNumber1.getImaginary() + complexNumber2.getImaginary());
 	}
 
-	static ComplexNumber subtract(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
+	public static ComplexNumber subtract(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
 
 		return new ComplexNumber(complexNumber1.getReal() - complexNumber2.getReal(), complexNumber1.getImaginary() - complexNumber2.getImaginary());
 	}
 
-	static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {
+	public static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {
 
 		return new ComplexNumber(a.getReal() * b.getReal() - a.getImaginary() * b.getImaginary(), a.getReal() * b.getImaginary() + a.getImaginary() * b.getReal());
 	}
 
-	ComplexNumber square() {
+	public ComplexNumber square() {
 
 		double real = this.real * this.real - this.imaginary * this.imaginary;
 		double imaginary = this.real * this.imaginary + this.real * this.imaginary;
@@ -66,7 +66,7 @@ public class ComplexNumber {
 		return new ComplexNumber(real, imaginary);
 	}
 
-	double magnitude() {
+	public double magnitude() {
 
 		double real = this.real * this.real;
 		double imaginary = this.imaginary * this.imaginary;
@@ -74,19 +74,19 @@ public class ComplexNumber {
 		return Math.sqrt(real + imaginary);
 	}
 
-	double getReal() {
+	public double getReal() {
 		return real;
 	}
 
-	void setReal(double real) {
+	public void setReal(double real) {
 		this.real = real;
 	}
 
-	double getImaginary() {
+	public double getImaginary() {
 		return imaginary;
 	}
 
-	void setImaginary(double imaginary) {
+	public void setImaginary(double imaginary) {
 		this.imaginary = imaginary;
 	}
 

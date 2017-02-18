@@ -1,4 +1,6 @@
-package main;
+package GUI;
+
+import images.ImageManager;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,7 +11,7 @@ import java.awt.image.BufferedImage;
 /**
  * Created by Robert Tatoian on 2/15/17.
  *
- * Handles anything related to drawing the Mandelbrot image to the GUI.
+ * Handles anything related to drawing the Serial image to the GUI.
 */
 public class MandelbrotViewer extends JPanel {
 
@@ -34,5 +36,7 @@ public class MandelbrotViewer extends JPanel {
 			g.drawImage(new BufferedImage(imageManager.getImageWidth(),imageManager.getImageHeight(),BufferedImage.TYPE_INT_RGB),0,0,this);
 		}
 
+		System.out.println("paint component called");
 	}
+
 }

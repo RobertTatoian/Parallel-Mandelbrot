@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main.UserInterface">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.UserInterface">
   <grid id="27dc6" binding="rootPanel" layout-manager="GridBagLayout">
     <constraints>
       <xy x="20" y="20" width="400" height="325"/>
@@ -12,7 +12,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <component id="10490" class="main.MandelbrotViewer" binding="mandelbrotViewer1" custom-create="true" default-binding="true">
+      <component id="10490" class="GUI.MandelbrotViewer" binding="mandelbrotViewer1" custom-create="true" default-binding="true">
         <constraints>
           <grid row="0" column="0" row-span="6" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag top="5" left="5" bottom="0" right="0" weightx="0.0" weighty="0.0"/>

@@ -1,21 +1,23 @@
-package main;
+package mandelbrot;
+
+import images.ImageManager;
 
 /**
  * Created by Robert Tatoian on 2/8/17.
- * This class handles the calculation of the Mandelbrot set.
+ * This class handles the calculation of the Serial set.
  */
-class Mandelbrot {
+public class Serial {
 
 	/**
 	 * To access information regarding the image.
 	 */
 	private ImageManager imageManager;
 
-	Mandelbrot(ImageManager imageManager) {
+	public Serial(ImageManager imageManager) {
 		this.imageManager = imageManager;
 	}
 
-	void iterateMandelbrot(double scaleX, double scaleY, double panX, double panY) {
+	public void iterateMandelbrot(double scaleX, double scaleY, double panX, double panY) {
 
 		imageManager.setFinishedDrawingImage(false);
 

@@ -1,9 +1,13 @@
-package main;
+package GUI;
+
+import images.ImageManager;
+import mandelbrot.Serial;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 
 /**
@@ -19,12 +23,20 @@ public class UserInterface implements ActionListener {
 	private JButton zoomOut;
 
 	private ImageManager imageManager;
+	private Serial mandelbrotSerial;
 
-	public UserInterface(ImageManager imageManager) {
-		this.imageManager = imageManager;
-		frame = new JFrame("Mandelbrot Set");
+	public UserInterface() {
+
+		imageManager = new ImageManager(2000, 2000);
+		mandelbrotSerial = new Serial(imageManager);
+
+		frame = new JFrame("Serial Set");
+
+		//Auto-Created function by Intellij
 		$$$setupUI$$$();
+
 		JFrame.setDefaultLookAndFeelDecorated(true);
+
 		frame.setContentPane(rootPanel);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.pack();
@@ -56,11 +68,13 @@ public class UserInterface implements ActionListener {
 		}
 		else if ("zoomout".equals(e.getActionCommand())) {
 			System.out.print("Zoom Out");
+			mandelbrotSerial.iterateMandelbrot(1, 1, 0, 0);
 		}
 		else if ("save".equals(e.getActionCommand())) {
 			//String fileLocation
 			//		= (String) JOptionPane.showInputDialog(frame, "Where should the image be written to?", "Save File", JOptionPane.QUESTION_MESSAGE, null, null, null);
-			imageManager.writeImage();
+			//imageManager.writeImage();
+			mandelbrotViewer1.repaint();
 		}
 	}
 
