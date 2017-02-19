@@ -1,19 +1,23 @@
 package GUI;
 
 import images.ImageManager;
+import mandelbrot.ComplexNumber;
+import mandelbrot.Parallel;
 import mandelbrot.Serial;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-
 /**
  * Created by roberttatoian on 2/15/17.
  */
 public class UserInterface implements ActionListener {
+
+	private boolean isSerial = true;
 
 	private JFrame frame;
 	private JPanel rootPanel;
@@ -23,14 +27,12 @@ public class UserInterface implements ActionListener {
 	private JButton zoomOut;
 
 	private ImageManager imageManager;
-	private Serial mandelbrotSerial;
 
-	public UserInterface() {
+	public UserInterface(ImageManager imageManager) {
 
 		JFrame.setDefaultLookAndFeelDecorated(true);
 
-		imageManager = new ImageManager(2000, 2000);
-		mandelbrotSerial = new Serial(imageManager);
+		this.imageManager = imageManager;
 
 		frame = new JFrame("Serial Set");
 		JMenuBar menuBar = new JMenuBar();
@@ -53,7 +55,6 @@ public class UserInterface implements ActionListener {
 		parallelItem.setActionCommand("parallel");
 		parallelItem.addActionListener(this);
 		implementation.add(parallelItem);
-
 
 
 		//Auto-Created function by Intellij
@@ -95,9 +96,11 @@ public class UserInterface implements ActionListener {
 				mandelbrotViewer1.repaint();
 				break;
 			case "serial":
+				isSerial = true;
 				mandelbrotViewer1.repaint();
 				break;
 			case "parallel":
+				isSerial = false;
 				mandelbrotViewer1.repaint();
 				break;
 			case "save":
@@ -108,6 +111,11 @@ public class UserInterface implements ActionListener {
 				break;
 		}
 
+	}
+
+
+	public boolean isSerial() {
+		return isSerial;
 	}
 
 	/**
@@ -198,5 +206,4 @@ public class UserInterface implements ActionListener {
 	public JComponent $$$getRootComponent$$$() {
 		return rootPanel;
 	}
-
 }

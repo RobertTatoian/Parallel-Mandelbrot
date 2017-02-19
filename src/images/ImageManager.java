@@ -74,4 +74,19 @@ public class ImageManager {
 		}
 
 	}
+
+	public void writeImage(BufferedImage image) {
+		///Users/roberttatoian/Desktop/file.png
+		File imageFile = new File("/Users/roberttatoian/Desktop/Mandelbrot-Parallel"+ image.toString() + ".png");
+		//imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
+
+		IIOImage iioImageWrapper = new IIOImage(image, null, null);
+		try {
+			ImageIO.write(iioImageWrapper.getRenderedImage(), "png", imageFile);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }
