@@ -19,8 +19,7 @@ public class ImageManager {
 	public ImageManager(int width, int height) {
 		this.imageWidth = width;
 		this.imageHeight = height;
-		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
-
+		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 		for (int i = 0; i < imageWidth; i++) {
 			for (int j = 0; j < imageHeight; j++) {
 				bufferedImage.setRGB(i, j, 16_777_215);

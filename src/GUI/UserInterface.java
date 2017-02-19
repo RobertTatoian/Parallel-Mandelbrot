@@ -198,4 +198,5 @@ public class UserInterface implements ActionListener {
 	public JComponent $$$getRootComponent$$$() {
 		return rootPanel;
 	}
+
 }
