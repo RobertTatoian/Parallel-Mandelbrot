@@ -12,6 +12,8 @@ import java.awt.image.BufferedImage;
 public class Parallel extends Thread {
 
 	public BufferedImage slice;
+	public final static int MAX_THREADS = 4;
+	public static int CURRENT_THREADS = 0;
 
 	public Parallel(int imageWidth, int imageHeight) {
 		slice = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB_PRE);
@@ -21,11 +23,35 @@ public class Parallel extends Thread {
 	public void run() {
 		super.run();
 
+		Parallel t1, t2;
+		t1 = new Parallel(slice.getWidth(),slice.getHeight());
+		t2 = new Parallel(slice.getWidth(),slice.getHeight());
+
+		CURRENT_THREADS++;
+
+		if (CURRENT_THREADS < MAX_THREADS){
+			t1.start();
+			t2.start();
+		}
+
 		ComplexPixel pixel;
 
 		while ((pixel = Main.pixelArrayBlockingQueue.poll()) != null) {
 			testBehavior(pixel.getC(),pixel.getPixelX(),pixel.getPixelY());
 		}
+
+		try{
+			t1.join();
+			t2.join();
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		Graphics graphics = slice.getGraphics();
+
+		graphics.drawImage(t1.slice,0,0,null);
+		graphics.drawImage(t2.slice,0,0,null);
 
 	}
 
