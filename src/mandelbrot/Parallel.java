@@ -5,6 +5,7 @@ import main.Main;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.IndexColorModel;
 
 /**
  * Created by Robert on 2/18/2017.
@@ -38,8 +39,6 @@ public class Parallel extends Thread {
 		Color converge = new Color(0,0,0,255);
 		Color diverge = new Color(255,255,255,255);
 
-
-
 		ComplexNumber z = new ComplexNumber();
 		ComplexNumber m;
 		m = ComplexNumber.add(z.square(), c);
@@ -47,7 +46,7 @@ public class Parallel extends Thread {
 		for (int k = 0; k < 5001; k++) {
 
 			if (!isInMandelbrot(m)) {
-				slice.setRGB((int) Math.round(widthX), (int) Math.round(heightY), diverge.getRGB());
+				slice.setRGB((int) Math.round(widthX), (int) Math.round(heightY), 16_777_215/(k+1));
 				break;
 			} else {
 				m = ComplexNumber.add(z.square(), c);

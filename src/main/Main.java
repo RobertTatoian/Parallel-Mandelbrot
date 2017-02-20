@@ -6,11 +6,8 @@ import images.ImageManager;
 import mandelbrot.ComplexNumber;
 import mandelbrot.Parallel;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
+
 
 public class Main {
 
@@ -67,6 +64,9 @@ public class Main {
 		imageManager.writeImage(t2.slice);
 		imageManager.writeImage(t3.slice);
 		imageManager.writeImage(t4.slice);
+
+		
+
 //		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //			@Override
 //			public void run() {
