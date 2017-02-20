@@ -5,26 +5,40 @@ import images.ComplexPixel;
 import images.ImageManager;
 import mandelbrot.ComplexNumber;
 import mandelbrot.Parallel;
+import mandelbrot.Serial;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.util.Vector;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 public class Main {
 
-	private static final int imageWidth = 2000;
-	private static final int imageHeight = 2000;
+	private static final int imageWidth = 5000;
+	private static final int imageHeight = 5000;
 
 	static UserInterface GUI;
-	public static ArrayBlockingQueue<ComplexPixel> pixelArrayBlockingQueue = new ArrayBlockingQueue<ComplexPixel>(imageWidth * imageHeight);
+	public static ArrayBlockingQueue<ComplexPixel> pixelArrayBlockingQueue = new ArrayBlockingQueue<>(imageWidth * imageHeight);
+
 	public static void main(String[] args) {
 
 		ImageManager imageManager = new ImageManager(imageWidth,imageHeight);
 
 		long t = System.currentTimeMillis();
+
+		Serial mandelbrot = new Serial(imageManager);
+
+		mandelbrot.iterateMandelbrot(1,1,0,0);
+
+		imageManager.writeImage();
+
+		System.out.println("Total time serial: " + (System.currentTimeMillis() - t));
 
 		for (int height = 0; height < imageHeight; height++) {
 			double imaginary = (imageManager.scalePixelYToImaginary(height) * 1 + 0);
@@ -34,10 +48,8 @@ public class Main {
 			}
 		}
 
-
-		System.out.println("Time to create complex pixels: " + (System.currentTimeMillis() - t));
-
 		t = System.currentTimeMillis();
+
 
 		Parallel t1, t2, t3, t4;
 		t1 = new Parallel("Thread 1", imageWidth,imageHeight);
@@ -50,8 +62,8 @@ public class Main {
 		t3.start();
 		t4.start();
 
-		System.out.println("Time to create threads: " + (System.currentTimeMillis() - t));
-
+		System.out.println("Total time parallel mark 1: " + (System.currentTimeMillis() - t));
+		t = System.currentTimeMillis();
 		try {
 			t1.join();
 			t2.join();
@@ -62,21 +74,20 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		System.out.println("Time to join threads: " + (System.currentTimeMillis() - t));
+		System.out.println("Total time parallel mark 2: " + (System.currentTimeMillis() - t));
+		t = System.currentTimeMillis();
+		BufferedImage finalImage = new BufferedImage(imageWidth, imageHeight,BufferedImage.TYPE_INT_ARGB);
+		Graphics graphics = finalImage.getGraphics();
 
-		imageManager.writeImage(t1.slice,1);
-		imageManager.writeImage(t2.slice,2);
-		imageManager.writeImage(t3.slice,3);
-		imageManager.writeImage(t4.slice,4);
+		graphics.drawImage(t1.slice,0,0,null);
+		graphics.drawImage(t2.slice,0,0,null);
+		graphics.drawImage(t3.slice,0,0,null);
+		graphics.drawImage(t4.slice,0,0,null);
 
-		Vector<BufferedImage> images = new Vector<>();
+		imageManager.writeImage(finalImage,1);
 
-		images.add(t1.slice);
-		images.add(t2.slice);
-		images.add(t3.slice);
-		images.add(t4.slice);
+		System.out.println("Total time parallel: " + (System.currentTimeMillis() - t));
 
-		imageManager.writeImage(imageManager.mergeImages(images),5);
 //		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //			@Override
 //			public void run() {

@@ -29,4 +29,5 @@ public class ComplexPixel {
 	public ComplexNumber getC() {
 		return c;
 	}
+
 }

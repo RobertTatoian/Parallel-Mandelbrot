@@ -45,17 +45,17 @@ public class ComplexNumber {
 
 	public static ComplexNumber add(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
 
-		return new ComplexNumber(complexNumber1.getReal() + complexNumber2.getReal(), complexNumber1.getImaginary() + complexNumber2.getImaginary());
+		return new ComplexNumber(complexNumber1.real + complexNumber2.real, complexNumber1.imaginary + complexNumber2.imaginary);
 	}
 
 	public static ComplexNumber subtract(ComplexNumber complexNumber1, ComplexNumber complexNumber2) {
 
-		return new ComplexNumber(complexNumber1.getReal() - complexNumber2.getReal(), complexNumber1.getImaginary() - complexNumber2.getImaginary());
+		return new ComplexNumber(complexNumber1.real - complexNumber2.real, complexNumber1.imaginary - complexNumber2.imaginary);
 	}
 
 	public static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {
 
-		return new ComplexNumber(a.getReal() * b.getReal() - a.getImaginary() * b.getImaginary(), a.getReal() * b.getImaginary() + a.getImaginary() * b.getReal());
+		return new ComplexNumber(a.real * b.real - a.imaginary * b.imaginary, a.real * b.imaginary + a.imaginary * b.real);
 	}
 
 	public ComplexNumber square() {

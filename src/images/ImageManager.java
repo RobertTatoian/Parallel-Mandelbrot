@@ -21,7 +21,7 @@ public class ImageManager {
 	public ImageManager(int width, int height) {
 		this.imageWidth = width;
 		this.imageHeight = height;
-		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
 		for (int i = 0; i < imageWidth; i++) {
 			for (int j = 0; j < imageHeight; j++) {
 				bufferedImage.setRGB(i, j, 16_777_215);
@@ -58,7 +58,6 @@ public class ImageManager {
 	}
 
 	public void setFinishedDrawingImage(boolean finishedDrawingImage) {
-		System.out.println("Finished drawing the image.");
 		isFinishedDrawingImage = finishedDrawingImage;
 	}
 
@@ -92,21 +91,4 @@ public class ImageManager {
 
 	}
 
-	public BufferedImage mergeImages(Vector<BufferedImage> images) {
-		BufferedImage finalImage = new BufferedImage(imageWidth, imageHeight,BufferedImage.TYPE_INT_ARGB);
-
-		//Probably the most inefficient way to merge all these images.... but it works well!
-		for (int i = 0; i < images.size(); i++) {
-			for (int j = 0; j < imageHeight; j++) {
-				for (int k = 0; k < imageWidth; k++) {
-					if (((images.elementAt(i).getRGB(k,j) >> 24)&0xFF) != 0) {
-						finalImage.setRGB(k, j, images.elementAt(i).getRGB(k, j));
-					}
-				}
-			}
-		}
-
-		return finalImage;
-
-	}
 }
