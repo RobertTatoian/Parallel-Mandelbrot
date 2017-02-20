@@ -13,8 +13,7 @@ public class Parallel extends Thread {
 
 	public BufferedImage slice;
 
-	public Parallel(String name, int imageWidth, int imageHeight) {
-		super(name);
+	public Parallel(int imageWidth, int imageHeight) {
 		slice = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB_PRE);
 	}
 
