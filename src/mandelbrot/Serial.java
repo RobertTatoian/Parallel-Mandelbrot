@@ -41,7 +41,7 @@ public class Serial {
 
 		for (int k = 0; k < 1001; k++) {
 
-			if (!isInMandelbrot(m)) {
+			if (m.magnitude() > 2) {
 				imageManager.setPixelAt(i,j,16_777_215/(k+1));
 				break;
 			}
@@ -54,12 +54,6 @@ public class Serial {
 			}
 
 		}
-	}
-
-	private static boolean isInMandelbrot(ComplexNumber mComplex) {
-
-		return !(mComplex.magnitude() > 2);
-
 	}
 
 }

@@ -64,7 +64,7 @@ public class Parallel extends Thread {
 
 		for (int k = 1; k < 1002; k++) {
 
-			if (!isInMandelbrot(m)) {
+			if (m.magnitude() > 2) {
 				slice.setRGB(Math.round(widthX), Math.round(heightY), (0xFF << 24)| (0x007F7F7F / (k + 1)));
 				break;
 			}
@@ -77,12 +77,6 @@ public class Parallel extends Thread {
 			}
 
 		}
-
-	}
-
-	private static boolean isInMandelbrot(ComplexNumber mComplex) {
-
-		return !(mComplex.magnitude() > 2);
 
 	}
 
