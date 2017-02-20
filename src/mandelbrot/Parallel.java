@@ -6,6 +6,7 @@ import main.Main;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.IndexColorModel;
+import java.util.Random;
 
 /**
  * Created by Robert on 2/18/2017.
@@ -37,25 +38,24 @@ public class Parallel extends Thread {
 
 	private void testBehavior(ComplexNumber c, int widthX, int heightY) {
 		Color converge = new Color(0,0,0,255);
-		Color diverge = new Color(255,255,255,255);
 
 		ComplexNumber z = new ComplexNumber();
 		ComplexNumber m;
 		m = ComplexNumber.add(z.square(), c);
 
-		for (int k = 0; k < 5001; k++) {
+		for (int k = 1; k < 1002; k++) {
 
 			if (!isInMandelbrot(m)) {
-				slice.setRGB((int) Math.round(widthX), (int) Math.round(heightY), 16_777_215/(k+1));
+				slice.setRGB(Math.round(widthX), Math.round(heightY), (0xFF << 24)| (0x007F7F7F / (k + 1)));
 				break;
 			} else {
 				m = ComplexNumber.add(z.square(), c);
 				z = m;
 			}
 
-			if (k == 5000) {
+			if (k == 1001) {
 				//System.out.println("Thread: " + this.getName() + " " + c.getReal() + " " + c. getImaginary() + " converges");
-				slice.setRGB((int) Math.round(widthX), (int) Math.round(heightY), converge.getRGB());
+				slice.setRGB(Math.round(widthX), Math.round(heightY), converge.getRGB());
 			}
 
 		}

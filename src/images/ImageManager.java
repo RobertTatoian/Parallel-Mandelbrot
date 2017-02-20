@@ -75,9 +75,9 @@ public class ImageManager {
 
 	}
 
-	public void writeImage(BufferedImage image) {
+	public void writeImage(BufferedImage image, int i) {
 		///Users/roberttatoian/Desktop/file.png
-		File imageFile = new File("/Users/roberttatoian/Desktop/Mandelbrot-Parallel"+ image.toString() + ".png");
+		File imageFile = new File("C:\\Users\\Robert\\Desktop\\Parallel" + i +".png");
 		//imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
 
 		IIOImage iioImageWrapper = new IIOImage(image, null, null);

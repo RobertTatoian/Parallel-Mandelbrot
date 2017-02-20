@@ -6,6 +6,8 @@ import images.ImageManager;
 import mandelbrot.ComplexNumber;
 import mandelbrot.Parallel;
 
+import java.awt.image.DataBuffer;
+import java.awt.image.Raster;
 import java.util.concurrent.ArrayBlockingQueue;
 
 
@@ -60,12 +62,10 @@ public class Main {
 
 		System.out.println("Time to join threads: " + (System.currentTimeMillis() - t));
 
-		imageManager.writeImage(t1.slice);
-		imageManager.writeImage(t2.slice);
-		imageManager.writeImage(t3.slice);
-		imageManager.writeImage(t4.slice);
-
-		
+		imageManager.writeImage(t1.slice,1);
+		imageManager.writeImage(t2.slice,2);
+		imageManager.writeImage(t3.slice,3);
+		imageManager.writeImage(t4.slice,4);
 
 //		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //			@Override
