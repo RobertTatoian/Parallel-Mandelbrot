@@ -6,8 +6,10 @@ import images.ImageManager;
 import mandelbrot.ComplexNumber;
 import mandelbrot.Parallel;
 
+import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
+import java.util.Vector;
 import java.util.concurrent.ArrayBlockingQueue;
 
 
@@ -67,6 +69,14 @@ public class Main {
 		imageManager.writeImage(t3.slice,3);
 		imageManager.writeImage(t4.slice,4);
 
+		Vector<BufferedImage> images = new Vector<>();
+
+		images.add(t1.slice);
+		images.add(t2.slice);
+		images.add(t3.slice);
+		images.add(t4.slice);
+
+		imageManager.writeImage(imageManager.mergeImages(images),5);
 //		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //			@Override
 //			public void run() {

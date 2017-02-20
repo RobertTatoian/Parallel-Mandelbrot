@@ -1,7 +1,9 @@
 package images;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Vector;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 
@@ -87,6 +89,24 @@ public class ImageManager {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public BufferedImage mergeImages(Vector<BufferedImage> images) {
+		BufferedImage finalImage = new BufferedImage(imageWidth, imageHeight,BufferedImage.TYPE_INT_ARGB);
+
+		//Probably the most inefficient way to merge all these images.... but it works well!
+		for (int i = 0; i < images.size(); i++) {
+			for (int j = 0; j < imageHeight; j++) {
+				for (int k = 0; k < imageWidth; k++) {
+					if (((images.elementAt(i).getRGB(k,j) >> 24)&0xFF) != 0) {
+						finalImage.setRGB(k, j, images.elementAt(i).getRGB(k, j));
+					}
+				}
+			}
+		}
+
+		return finalImage;
 
 	}
 }

@@ -39,7 +39,7 @@ public class Serial {
 		ComplexNumber m;
 		m = ComplexNumber.add(z.square(), c);
 
-		for (int k = 0; k < 5001; k++) {
+		for (int k = 0; k < 1001; k++) {
 
 			if (!isInMandelbrot(m)) {
 				imageManager.setPixelAt(i,j,16_777_215/(k+1));
@@ -49,7 +49,7 @@ public class Serial {
 				z = m;
 			}
 
-			if (k == 5000) {
+			if (k == 1000) {
 				imageManager.setPixelAt(i,j, 0);
 			}
 
