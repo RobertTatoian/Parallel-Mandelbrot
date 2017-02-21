@@ -1,6 +1,7 @@
 package mandelbrot;
 
 import images.ComplexPixel;
+import images.ImageManager;
 import main.Main;
 
 import java.awt.*;
@@ -13,19 +14,33 @@ public class Parallel extends Thread {
 
 	public BufferedImage slice;
 
-	public Parallel(int imageWidth, int imageHeight) {
+	private int width;
+	private int height;
+	private int x;
+	private int y;
+
+	public Parallel(int imageWidth, int imageHeight,int xStart, int yStart ,int xBound, int yBound) {
 		slice = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB_PRE);
+		width = xBound;
+		height = yBound;
+		x = xStart;
+		y = yStart;
 	}
 
 	@Override
 	public void run() {
 		super.run();
 
-		ComplexPixel pixel;
+		ComplexNumber c = new ComplexNumber();
 
-		while ((pixel = Main.pixelArrayBlockingQueue.poll()) != null) {
-			testBehavior(pixel.getC(),pixel.getPixelX(),pixel.getPixelY());
+		for (int i = y; i < height; i++) {
+			c.setImaginary((i - (slice.getHeight() / 2f)) * (1f / (slice.getHeight() / 4f)));
+			for (int j = x; j < width; j++) {
+				c.setReal(-1 * (j - (slice.getWidth() / 2f)) * (1f / (slice.getWidth() / 4f)));
+				testBehavior(c, j, i);
+			}
 		}
+
 
 	}
 

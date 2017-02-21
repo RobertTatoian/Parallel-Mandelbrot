@@ -30,6 +30,7 @@ public class Serial {
 				testBehavior(c, j, i);
 			}
 		}
+
 		imageManager.setFinishedDrawingImage(true);
 
 	}
