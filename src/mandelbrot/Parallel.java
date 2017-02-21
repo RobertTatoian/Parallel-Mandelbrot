@@ -31,21 +31,10 @@ public class Parallel extends Thread {
 	public void run() {
 		super.run();
 
-		ComplexNumber c = new ComplexNumber();
-
-		for (int i = y; i < height; i++) {
-			c.setImaginary((i - (slice.getHeight() / 2f)) * (1f / (slice.getHeight() / 4f)));
-			for (int j = x; j < width; j++) {
-				c.setReal(-1 * (j - (slice.getWidth() / 2f)) * (1f / (slice.getWidth() / 4f)));
-				testBehavior(c, j, i);
-			}
-		}
-
 
 	}
 
 	private void testBehavior(ComplexNumber c, int widthX, int heightY) {
-		Color converge = new Color(0,0,0,255);
 
 		ComplexNumber z = new ComplexNumber();
 		ComplexNumber m;
@@ -53,7 +42,7 @@ public class Parallel extends Thread {
 
 		for (int k = 1; k < 1002; k++) {
 
-			if (!isInMandelbrot(m)) {
+			if (m.magnitude() > 2) {
 				slice.setRGB(Math.round(widthX), Math.round(heightY), (0xFF << 24)| (0x007F7F7F / (k + 1)));
 				break;
 			}
@@ -62,16 +51,10 @@ public class Parallel extends Thread {
 			z = m;
 
 			if (k == 1001) {
-				slice.setRGB(Math.round(widthX), Math.round(heightY), converge.getRGB());
+				slice.setRGB(Math.round(widthX), Math.round(heightY), (0xFF << 24));
 			}
 
 		}
-
-	}
-
-	private static boolean isInMandelbrot(ComplexNumber mComplex) {
-
-		return !(mComplex.magnitude() > 2);
 
 	}
 
