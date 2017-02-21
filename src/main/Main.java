@@ -33,17 +33,11 @@ public class Main {
 
 		Serial mandelbrot = new Serial(imageManager);
 
-		long h = System.currentTimeMillis();
-
 		mandelbrot.iterateMandelbrot(1,1,0,0);
 
-		System.out.println("Total time serial execution: " + (System.currentTimeMillis() - h));
+		System.out.println("Total time serial execution: " + (System.currentTimeMillis() - t));
 
 		imageManager.writeImage();
-
-		System.out.println("Total time serial: " + (System.currentTimeMillis() - t));
-
-		long g = t = System.currentTimeMillis();
 
 		Parallel t1, t2, t3, t4;
 
@@ -52,7 +46,6 @@ public class Main {
 		t3 = new Parallel(imageWidth,imageHeight,0,imageHeight /2 ,imageWidth/2, imageHeight);
 		t4 = new Parallel(imageWidth,imageHeight,imageWidth/2,imageHeight /2,imageWidth, imageHeight);
 
-		System.out.println("Time spent in execution: " + (System.currentTimeMillis() - t));
 		t = System.currentTimeMillis();
 
 		t1.start();
@@ -70,9 +63,8 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		System.out.println("Time spent in execution: " + (System.currentTimeMillis() - t));
+		System.out.println("Total time parallel execution: " + (System.currentTimeMillis() - t));
 
-		t = System.currentTimeMillis();
 
 		BufferedImage finalImage = new BufferedImage(imageWidth, imageHeight,BufferedImage.TYPE_INT_ARGB);
 		Graphics graphics = finalImage.getGraphics();
@@ -84,10 +76,6 @@ public class Main {
 
 
 		imageManager.writeImage(finalImage,1);
-
-		System.out.println("Time spent writing images: " + (System.currentTimeMillis() - t));
-
-		System.out.println("Total time parallel: " + (System.currentTimeMillis() - g));
 
 //		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //			@Override
