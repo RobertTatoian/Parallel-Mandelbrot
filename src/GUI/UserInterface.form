@@ -8,13 +8,13 @@
       <maximumSize width="1024" height="1024"/>
       <minimumSize width="400" height="325"/>
       <opaque value="false"/>
-      <preferredSize width="512" height="350"/>
+      <preferredSize width="512" height="512"/>
     </properties>
     <border type="none"/>
     <children>
       <component id="10490" class="GUI.MandelbrotViewer" binding="mandelbrotViewer1" custom-create="true" default-binding="true">
         <constraints>
-          <grid row="0" column="0" row-span="6" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="7" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag top="5" left="5" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
@@ -32,7 +32,7 @@
       </hspacer>
       <vspacer id="26075">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
       </vspacer>
@@ -62,8 +62,8 @@
       </component>
       <component id="c11bb" class="javax.swing.JButton" binding="savePlot">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.5"/>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.25"/>
         </constraints>
         <properties>
           <text value="Save Plot"/>
@@ -81,6 +81,15 @@
           <gridbag weightx="0.0" weighty="0.17"/>
         </constraints>
       </vspacer>
+      <component id="6d136" class="javax.swing.JButton" binding="plotButton">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Plot"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

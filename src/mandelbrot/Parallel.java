@@ -34,7 +34,7 @@ public class Parallel extends Thread {
 		bottom_starting_Y_T2 = endingY;
 
 		//Each thread needs a blank buffered image.
-		slice = new BufferedImage(imageManager.getImageWidth(), imageManager.getImageHeight(), BufferedImage.TYPE_INT_ARGB);
+		slice = new BufferedImage(bottom_starting_X_T2.get() + 1, bottom_starting_Y_T2.get() + 1, BufferedImage.TYPE_INT_ARGB);
 
 	}
 
@@ -51,13 +51,8 @@ public class Parallel extends Thread {
 		bottom_starting_X_T2.set(endingX);
 		bottom_starting_Y_T2.set(endingY - 1);
 
-//		System.out.println(this.getId() + "top_starting_X_T1: " + top_starting_X_T1);
-//		System.out.println(this.getId() + "top_starting_Y_T1: " + top_starting_Y_T1);
-//		System.out.println(this.getId() + "bottom_starting_X_T2: " + bottom_starting_X_T2);
-//		System.out.println(this.getId() + "bottom_starting_Y_T2: " + bottom_starting_Y_T2);
-
 		//Each thread needs a blank buffered image.
-		slice = new BufferedImage(imageManager.getImageWidth(), imageManager.getImageHeight(), BufferedImage.TYPE_INT_ARGB);
+		slice = new BufferedImage(bottom_starting_X_T2.get() + 1, bottom_starting_Y_T2.get() + 1, BufferedImage.TYPE_INT_ARGB);
 
 	}
 
@@ -69,9 +64,6 @@ public class Parallel extends Thread {
 			case "daemon":
 
 				Parallel t1,t2;
-
-//				t1 = new Parallel("top", imageManager,top_starting_X_T1.get(),top_starting_Y_T1.get(),bottom_starting_X_T2.get(),bottom_starting_Y_T2.get());
-//				t2 = new Parallel("bottom", imageManager,top_starting_X_T1.get(),top_starting_Y_T1.get(),bottom_starting_X_T2.get(),bottom_starting_Y_T2.get());
 
 				t1 = new Parallel("top", imageManager, top_starting_X_T1, top_starting_Y_T1, bottom_starting_X_T2, bottom_starting_Y_T2);
 				t2 = new Parallel("bottom", imageManager, top_starting_X_T1, top_starting_Y_T1, bottom_starting_X_T2, bottom_starting_Y_T2);
@@ -98,24 +90,10 @@ public class Parallel extends Thread {
 
 				ComplexNumber top_c = new ComplexNumber();
 
-//				System.out.println(this.getId() + "top_starting_X_T1: " + top_starting_X_T1);
-//				System.out.println(this.getId() + "top_starting_Y_T1: " + top_starting_Y_T1);
-//				System.out.println(this.getId() + "bottom_starting_X_T2: " + bottom_starting_X_T2);
-//				System.out.println(this.getId() + "bottom_starting_Y_T2: " + bottom_starting_Y_T2);
-
-				//TODO: Remove hardcoded values
-//				for (; top_starting_Y_T1 < bottom_starting_Y_T2; top_starting_Y_T1++) {
-//					top_c.setImaginary(-1 * (top_starting_Y_T1 - (1000 / 2f)) * (1f / (1000 / 4f)));
-//					for (; (top_starting_X_T1 < bottom_starting_X_T2) && (bottom_starting_Y_T2 != top_starting_Y_T1); top_starting_X_T1++){
-//						top_c.setReal((top_starting_X_T1 - (1000 / 2f)) * (1f / (1000 / 4f)));
-//						testBehavior(top_c, top_starting_X_T1, top_starting_Y_T1);
-//					}
-//
-//				}
 				for (; top_starting_Y_T1.get() < bottom_starting_Y_T2.get() ; top_starting_Y_T1.incrementAndGet()) {
-					top_c.setImaginary(-1 * (top_starting_Y_T1.get() - (1000 / 2f)) * (1f / (1000 / 4f)));
+					top_c.setImaginary(-1 * (top_starting_Y_T1.get() - (imageManager.getImageHeight() / 2f)) * (1f / (imageManager.getImageHeight() / 4f)));
 					for (int i = top_starting_X_T1.get(); i < bottom_starting_X_T2.get(); i++){
-						top_c.setReal((i - (1000 / 2f)) * (1f / (1000 / 4f)));
+						top_c.setReal((i - (imageManager.getImageWidth() / 2f)) * (1f / (imageManager.getImageWidth() / 4f)));
 						testBehavior(top_c, i, top_starting_Y_T1.get());
 					}
 
@@ -126,24 +104,10 @@ public class Parallel extends Thread {
 
 				ComplexNumber bottom_c = new ComplexNumber();
 
-//				System.out.println(this.getId() + "top_starting_X_T1: " + top_starting_X_T1.get());
-//				System.out.println(this.getId() + "top_starting_Y_T1: " + top_starting_Y_T1.get());
-//				System.out.println(this.getId() + "bottom_starting_X_T2: " + bottom_starting_X_T2.get());
-//				System.out.println(this.getId() + "bottom_starting_Y_T2: " + bottom_starting_Y_T2.get());
-
-//				for (; bottom_starting_Y_T2 > top_starting_Y_T1; bottom_starting_Y_T2--) {
-//					bottom_c.setImaginary(-1 * (bottom_starting_Y_T2 - (1000 / 2f)) * (1f / (1000 / 4f)));
-//					for (; (bottom_starting_X_T2 > top_starting_X_T1) && (bottom_starting_Y_T2 != top_starting_Y_T1); bottom_starting_X_T2--){
-//						bottom_c.setReal((bottom_starting_X_T2 - (1000 / 2f)) * (1f / (1000 / 4f)));
-//						System.out.println("Bottom X: "  + bottom_starting_X_T2 + "Bottom Y: " + bottom_starting_Y_T2);
-//						testBehavior(bottom_c, bottom_starting_X_T2, bottom_starting_Y_T2);
-//					}
-//					System.out.println("Bottom X: "  + bottom_starting_X_T2 + "Top X: " + top_starting_X_T1);
-//				}
 				for (; bottom_starting_Y_T2.get() > top_starting_Y_T1.get(); bottom_starting_Y_T2.decrementAndGet()) {
-					bottom_c.setImaginary(-1 * (bottom_starting_Y_T2.get() - (1000 / 2f)) * (1f / (1000 / 4f)));
+					bottom_c.setImaginary(-1 * (bottom_starting_Y_T2.get() - (imageManager.getImageHeight() / 2f)) * (1f / (imageManager.getImageHeight() / 4f)));
 					for (int i = top_starting_X_T1.get(); i < bottom_starting_X_T2.get(); i++){
-						bottom_c.setReal((i - (1000 / 2f)) * (1f / (1000 / 4f)));
+						bottom_c.setReal((i - (imageManager.getImageWidth() / 2f)) * (1f / (imageManager.getImageWidth() / 4f)));
 						testBehavior(bottom_c, i, bottom_starting_Y_T2.get());
 					}
 

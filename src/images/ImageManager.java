@@ -53,6 +53,12 @@ public class ImageManager {
 		return bufferedImage;
 	}
 
+	public void setBufferedImage(BufferedImage bufferedImage) {
+		if (bufferedImage != null) {
+			this.bufferedImage = bufferedImage;
+		}
+	}
+
 	public boolean isFinishedDrawingImage() {
 		return isFinishedDrawingImage;
 	}
@@ -62,9 +68,7 @@ public class ImageManager {
 	}
 
 	public void writeImage() {
-		///Users/roberttatoian/Desktop/file.png
-		File imageFile = new File("C:\\Users\\Robert\\Desktop\\Serial.png");
-		//imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
+		File imageFile = new File("Serial.png");
 
 		IIOImage iioImageWrapper = new IIOImage(bufferedImage, null, null);
 		try {
@@ -76,10 +80,9 @@ public class ImageManager {
 
 	}
 
-	public void writeImage(BufferedImage image, int i) {
-		///Users/roberttatoian/Desktop/file.png
-		File imageFile = new File("C:\\Users\\Robert\\Desktop\\Parallel" + i +".png");
-		//imageFile = new File("C:\\Users\\Robert Tatoian\\Desktop\\file.png");
+	public void writeImage(BufferedImage image) {
+
+		File imageFile = new File("Parallel.png");
 
 		IIOImage iioImageWrapper = new IIOImage(image, null, null);
 		try {
