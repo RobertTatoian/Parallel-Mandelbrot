@@ -19,6 +19,8 @@ import java.awt.image.BufferedImage;
 public class UserInterface implements ActionListener {
 
 	private boolean isSerial = true;
+	private static final int imageWidth = 1000;
+	private static final int imageHeight = 1000;
 
 	private JFrame frame;
 	private JPanel rootPanel;
@@ -30,7 +32,9 @@ public class UserInterface implements ActionListener {
 
 	private ImageManager imageManager;
 
-	public UserInterface(ImageManager imageManager) {
+	public UserInterface() {
+
+		imageManager = new ImageManager(imageWidth, imageHeight);
 
 		JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -58,6 +62,44 @@ public class UserInterface implements ActionListener {
 		parallelItem.addActionListener(this);
 		implementation.add(parallelItem);
 
+		JMenu size = new JMenu("Image Size");
+		menuBar.add(size);
+
+		ButtonGroup sizeGroup = new ButtonGroup();
+		JRadioButtonMenuItem oneThousand = new JRadioButtonMenuItem("1000 x 1000");
+		oneThousand.setSelected(true);
+		sizeGroup.add(oneThousand);
+		oneThousand.setActionCommand("1000");
+		oneThousand.addActionListener(this);
+		size.add(oneThousand);
+
+		JRadioButtonMenuItem twoThousand = new JRadioButtonMenuItem("2000 x 2000");
+		twoThousand.setSelected(true);
+		sizeGroup.add(twoThousand);
+		twoThousand.setActionCommand("2000");
+		twoThousand.addActionListener(this);
+		size.add(twoThousand);
+
+		JRadioButtonMenuItem fiveThousand = new JRadioButtonMenuItem("5000 x 5000");
+		fiveThousand.setSelected(true);
+		sizeGroup.add(fiveThousand);
+		fiveThousand.setActionCommand("5000");
+		fiveThousand.addActionListener(this);
+		size.add(fiveThousand);
+
+		JRadioButtonMenuItem tenThousand = new JRadioButtonMenuItem("6000 x 6000");
+		tenThousand.setSelected(true);
+		sizeGroup.add(tenThousand);
+		tenThousand.setActionCommand("6000");
+		tenThousand.addActionListener(this);
+		size.add(tenThousand);
+
+		JRadioButtonMenuItem eightThousand = new JRadioButtonMenuItem("8000 x 8000");
+		eightThousand.setSelected(true);
+		sizeGroup.add(eightThousand);
+		eightThousand.setActionCommand("8000");
+		eightThousand.addActionListener(this);
+		size.add(eightThousand);
 
 		//Auto-Created function by Intellij
 		$$$setupUI$$$();
@@ -123,16 +165,71 @@ public class UserInterface implements ActionListener {
 
 				mandelbrotViewer1.repaint();
 				break;
+			case "1000":
+
+				try {
+					imageManager.setDimensions(1000, 1000);
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				mandelbrotViewer1.repaint();
+				break;
+			case "2000":
+
+				try {
+					imageManager.setDimensions(2000, 2000);
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				mandelbrotViewer1.repaint();
+
+				break;
+			case "5000":
+
+				try {
+					imageManager.setDimensions(5000, 5000);
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				mandelbrotViewer1.repaint();
+
+				break;
+			case "6000":
+
+				try {
+					imageManager.setDimensions(6000, 6000);
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				mandelbrotViewer1.repaint();
+
+				break;
+			case "8000":
+
+				try {
+					imageManager.setDimensions(8000, 8000);
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				mandelbrotViewer1.repaint();
+
+				break;
+
 			default:
 				System.err.println("There was an uncovered action command.");
 				break;
 		}
 
-	}
-
-
-	public boolean isSerial() {
-		return isSerial;
 	}
 
 	private void serialImplementation() {
@@ -185,8 +282,8 @@ public class UserInterface implements ActionListener {
 		Graphics graphics = finalImage.getGraphics();
 
 		graphics.drawImage(t1.slice, 0, 0, null);
-		graphics.drawImage(t2.slice, 1, 0, null);
-		graphics.drawImage(t3.slice, 2, 0, null);
+		graphics.drawImage(t2.slice, 0, 0, null);
+		graphics.drawImage(t3.slice, 0, 0, null);
 
 		imageManager.setBufferedImage(finalImage);
 

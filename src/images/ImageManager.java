@@ -21,7 +21,7 @@ public class ImageManager {
 	public ImageManager(int width, int height) {
 		this.imageWidth = width;
 		this.imageHeight = height;
-		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
+		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 		for (int i = 0; i < imageWidth; i++) {
 			for (int j = 0; j < imageHeight; j++) {
 				bufferedImage.setRGB(i, j, 16_777_215);
@@ -56,6 +56,21 @@ public class ImageManager {
 	public void setBufferedImage(BufferedImage bufferedImage) {
 		if (bufferedImage != null) {
 			this.bufferedImage = bufferedImage;
+		}
+	}
+
+	public void setDimensions(int width, int height) throws Exception {
+		if (width > 0 && height > 0) {
+			this.imageWidth = width;
+			this.imageHeight = height;
+			this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+			for (int i = 0; i < imageWidth; i++) {
+				for (int j = 0; j < imageHeight; j++) {
+					bufferedImage.setRGB(i, j, 16_777_215);
+				}
+			}
+		} else {
+			throw new Exception("Image height or width are too small.");
 		}
 	}
 

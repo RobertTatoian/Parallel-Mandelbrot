@@ -43,7 +43,7 @@ public class Serial {
 		for (int k = 0; k < 1001; k++) {
 
 			if (!isInMandelbrot(m)) {
-				imageManager.setPixelAt(i,j,16_777_215/(k+1));
+				imageManager.setPixelAt(i,j,(0xFF << 24)| (0x007F7F7F / (k + 1)));
 				break;
 			}
 
@@ -51,7 +51,7 @@ public class Serial {
 			z = m;
 
 			if (k == 1000) {
-				imageManager.setPixelAt(i,j, 0);
+				imageManager.setPixelAt(i,j, (0xFF << 24));
 			}
 
 		}
