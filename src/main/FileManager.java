@@ -8,8 +8,8 @@ import java.io.*;
  */
 public class FileManager {
 
-	File output;
-	FileWriter writer;
+	private File output;
+	private FileWriter writer;
 	PrintWriter printWriter;
 
 	public FileManager (String name) {

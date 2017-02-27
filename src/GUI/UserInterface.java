@@ -274,7 +274,7 @@ public class UserInterface implements ActionListener {
 
 		Parallel t1, t2, t3;
 
-		int imageSlice = imageManager.getImageHeight() / 3;
+		int imageSlice = imageManager.getImageHeight();
 		System.out.println(Runtime.getRuntime().availableProcessors());
 		System.out.println(imageSlice);
 

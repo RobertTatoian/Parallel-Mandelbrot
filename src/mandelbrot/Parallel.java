@@ -26,9 +26,9 @@ public class Parallel extends Thread {
 	private volatile AtomicInteger bottom_starting_X_T2 = new AtomicInteger(0);
 	private volatile AtomicInteger bottom_starting_Y_T2 = new AtomicInteger(0);
 
-	public static double scale = 1;
-	public static double panX = 0;
-	public static double panY = 0;
+	public volatile static double scale = 1;
+	public volatile static double panX = 0;
+	public volatile static double panY = 0;
 
 	private Parallel(String threadName, ImageManager imageManager, AtomicInteger startingX, AtomicInteger startingY, AtomicInteger endingX, AtomicInteger endingY) {
 		super(threadName);
