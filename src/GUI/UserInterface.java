@@ -1,6 +1,7 @@
 package GUI;
 
 import images.ImageManager;
+import main.FileManager;
 import mandelbrot.Parallel;
 import mandelbrot.Serial;
 
@@ -260,17 +261,21 @@ public class UserInterface implements ActionListener {
 
 	private void serialImplementation() {
 
+		FileManager serialWriter = new FileManager("Serial Times.txt");
+
 		long t = System.currentTimeMillis();
 
 		Serial mandelbrot = new Serial(imageManager);
 
 		mandelbrot.iterateMandelbrot(parseInput(zoomValue.getName(), zoomValue.getText()), parseInput(panXValue.getName(), panXValue.getText()), parseInput(panYValue.getName(), panYValue.getText()));
 
-		System.out.println("Total time serial execution: " + (System.currentTimeMillis() - t));
+		serialWriter.writeFile(Math.toIntExact((System.currentTimeMillis() - t)));
 
 	}
 
 	private void parallelImplementation() {
+
+		FileManager parallelWriter = new FileManager("Parallel Times.txt");
 
 		Parallel t1, t2, t3;
 
@@ -302,7 +307,7 @@ public class UserInterface implements ActionListener {
 			e.printStackTrace();
 		}
 
-		System.out.println("Total time parallel execution: " + (System.currentTimeMillis() - t));
+		parallelWriter.writeFile(Math.toIntExact((System.currentTimeMillis() - t)));
 
 		imageManager.setFinishedDrawingImage(false);
 
