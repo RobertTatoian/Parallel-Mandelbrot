@@ -7,8 +7,12 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by Robert on 2/18/2017.
+ * This class implements the parallel version the the mandelbrot set calculation and plotting. The implementation divides the image
+ * into column sections and creates two processes, one that starts from the top and progresses down and another that starts from the bottom and
+ * progresses up.
  * @author Robert Tatoian
+ * @since 02/17/2017
+ * @version 1.4
  */
 public class Parallel extends Thread {
 

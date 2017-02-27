@@ -1,10 +1,10 @@
 package mandelbrot;
 
-import java.lang.Math;
-
 /**
- * Created by Robert Tatoian on 2/11/2017.
  * This class handles the storage and manipulation of complex numbers.
+ * @author Robert Tatoian
+ * @since 02/11/2017
+ * @version 1.0
  */
 public class ComplexNumber {
 

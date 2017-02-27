@@ -6,10 +6,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
- * Created by Robert Tatoian on 2/9/17.
+ * The ImageManager class handles most of the I/O for writing images.
  * @author Robert Tatoian
+ * @since 02/09/2017
+ * @version 1.0
  *
- * The ImageManager class handles most of the IO for writing images.
  */
 public class ImageManager {
 

@@ -3,8 +3,10 @@ package mandelbrot;
 import images.ImageManager;
 
 /**
- * Created by Robert Tatoian on 2/8/17.
- * This class handles the calculation of the Serial set.
+ * This class implements the serial version the the mandelbrot set calculation and plotting.
+ * @author Robert Tatoian
+ * @since 02/08/2017
+ * @version 1.0
  */
 public class Serial {
 

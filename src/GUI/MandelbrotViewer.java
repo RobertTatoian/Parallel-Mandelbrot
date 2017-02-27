@@ -10,9 +10,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 /**
- * Created by Robert Tatoian on 2/15/17.
- *
  * Handles anything related to drawing the Serial image to the GUI.
+ * @author Robert Tatoian
+ * @since 02/21/2017
+ * @version 1.0
 */
 public class MandelbrotViewer extends JPanel {
 

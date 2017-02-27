@@ -27,10 +27,10 @@ import java.awt.image.BufferedImage;
 
 
 /**
- * Created by Robert Tatoian on 2/15/17.
- * @author Robert Tatoian
- *
  * This class implements the GUI for the program. Note that there are methods which are created by the Intellij IDE in this class and they should not be altered.
+ * @author Robert Tatoian
+ * @since 02/15/2017
+ * @version 1.0
  */
 public class UserInterface implements ActionListener {
 
