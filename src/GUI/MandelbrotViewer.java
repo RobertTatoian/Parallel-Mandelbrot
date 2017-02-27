@@ -38,7 +38,6 @@ public class MandelbrotViewer extends JPanel {
 			g.drawImage(new BufferedImage(imageManager.getImageWidth(),imageManager.getImageHeight(),BufferedImage.TYPE_INT_RGB),0,0,this);
 		}
 
-		System.out.println("paint component called");
 	}
 
 }
