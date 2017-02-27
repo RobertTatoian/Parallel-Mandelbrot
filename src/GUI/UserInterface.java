@@ -1,20 +1,36 @@
 package GUI;
 
 import images.ImageManager;
-import mandelbrot.ComplexNumber;
 import mandelbrot.Parallel;
 import mandelbrot.Serial;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 
 /**
- * Created by roberttatoian on 2/15/17.
+ * Created by Robert Tatoian on 2/15/17.
+ * @author Robert Tatoian
+ *
+ * This class implements the GUI for the program. Note that there are methods which are created by the Intellij IDE in this class and they should not be altered.
  */
 public class UserInterface implements ActionListener {
 
@@ -26,9 +42,10 @@ public class UserInterface implements ActionListener {
 	private JPanel rootPanel;
 	private MandelbrotViewer mandelbrotViewer1;
 	private JButton savePlot;
-	private JButton zoomIn;
-	private JButton zoomOut;
 	private JButton plotButton;
+	private JTextField panXValue;
+	private JTextField panYValue;
+	private JTextField zoomValue;
 
 	private ImageManager imageManager;
 
@@ -37,8 +54,6 @@ public class UserInterface implements ActionListener {
 		imageManager = new ImageManager(imageWidth, imageHeight);
 
 		JFrame.setDefaultLookAndFeelDecorated(true);
-
-		this.imageManager = imageManager;
 
 		frame = new JFrame("Serial Set");
 		JMenuBar menuBar = new JMenuBar();
@@ -111,12 +126,6 @@ public class UserInterface implements ActionListener {
 
 		frame.setJMenuBar(menuBar);
 
-		zoomIn.setActionCommand("zoomin");
-		zoomIn.addActionListener(this);
-
-		zoomOut.setActionCommand("zoomout");
-		zoomOut.addActionListener(this);
-
 		savePlot.setActionCommand("save");
 		savePlot.addActionListener(this);
 
@@ -131,18 +140,12 @@ public class UserInterface implements ActionListener {
 	/**
 	 * Invoked when an action occurs.
 	 *
-	 * @param e
+	 * @param e - The action event sent.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
-			case "zoomin":
-				mandelbrotViewer1.repaint();
-				break;
-			case "zoomout":
-				mandelbrotViewer1.repaint();
-				break;
 			case "serial":
 				isSerial = true;
 				mandelbrotViewer1.repaint();
@@ -232,12 +235,34 @@ public class UserInterface implements ActionListener {
 
 	}
 
+	private double parseInput(String sender, String input) {
+
+		double number;
+
+		if (sender.equals("zoomValue")) {
+			number = 1;
+		}
+		else {
+			number = 0;
+		}
+
+		try {
+			number = Double.parseDouble(input);
+		}
+		catch (NumberFormatException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(frame, "The input entered into the text field is not a number, using default value.", "Invalid Number", JOptionPane.WARNING_MESSAGE);
+		}
+
+		return number;
+	}
+
 	private void serialImplementation() {
 		long t = System.currentTimeMillis();
 
 		Serial mandelbrot = new Serial(imageManager);
 
-		mandelbrot.iterateMandelbrot(1, 1, 0, 0);
+		mandelbrot.iterateMandelbrot(parseInput(zoomValue.getName(), zoomValue.getText()), parseInput(panXValue.getName(), panXValue.getText()), parseInput(panYValue.getName(), panYValue.getText()));
 
 		System.out.println("Total time serial execution: " + (System.currentTimeMillis() - t));
 
@@ -251,10 +276,16 @@ public class UserInterface implements ActionListener {
 		System.out.println(Runtime.getRuntime().availableProcessors());
 		System.out.println(imageSlice);
 
+		Parallel.scale = parseInput(zoomValue.getName(), zoomValue.getText());
+		Parallel.panX = parseInput(panXValue.getName(), panXValue.getText());
+		Parallel.panY = parseInput(panYValue.getName(), panYValue.getText());
 
-		t1 = new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight());
-		t2 = new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight());
-		t3 = new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight());
+		t1
+				= new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight());
+		t2
+				= new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight());
+		t3
+				= new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight());
 
 
 		long t = System.currentTimeMillis();
@@ -289,7 +320,7 @@ public class UserInterface implements ActionListener {
 
 		imageManager.setFinishedDrawingImage(true);
 
-		imageManager.writeImage(finalImage);
+		ImageManager.writeImage(finalImage);
 	}
 
 	/**
@@ -315,70 +346,77 @@ public class UserInterface implements ActionListener {
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridheight = 7;
+		gbc.gridheight = 8;
 		gbc.insets = new Insets(5, 5, 0, 0);
 		rootPanel.add(mandelbrotViewer1, gbc);
 		final JPanel spacer1 = new JPanel();
 		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.gridy = 3;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		rootPanel.add(spacer1, gbc);
-		final JPanel spacer2 = new JPanel();
-		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
-		gbc.gridy = 7;
+		gbc.gridy = 8;
 		gbc.fill = GridBagConstraints.VERTICAL;
-		rootPanel.add(spacer2, gbc);
-		zoomIn = new JButton();
-		zoomIn.setMaximumSize(new Dimension(30, 27));
-		zoomIn.setMinimumSize(new Dimension(28, 27));
-		zoomIn.setPreferredSize(new Dimension(28, 27));
-		zoomIn.setText("+");
-		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		rootPanel.add(zoomIn, gbc);
-		zoomOut = new JButton();
-		zoomOut.setMaximumSize(new Dimension(30, 27));
-		zoomOut.setMinimumSize(new Dimension(28, 27));
-		zoomOut.setPreferredSize(new Dimension(28, 27));
-		zoomOut.setText("-");
-		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		rootPanel.add(zoomOut, gbc);
+		rootPanel.add(spacer1, gbc);
 		savePlot = new JButton();
 		savePlot.setText("Save Plot");
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
-		gbc.gridy = 6;
-		gbc.weighty = 0.25;
+		gbc.gridy = 7;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		rootPanel.add(savePlot, gbc);
-		final JPanel spacer3 = new JPanel();
-		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.gridy = 4;
-		gbc.weighty = 1.1;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		rootPanel.add(spacer3, gbc);
-		final JPanel spacer4 = new JPanel();
-		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.weighty = 0.17;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		rootPanel.add(spacer4, gbc);
 		plotButton = new JButton();
 		plotButton.setText("Plot");
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		rootPanel.add(plotButton, gbc);
+		final JLabel label1 = new JLabel();
+		label1.setText("Pan on Real:");
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbc.anchor = GridBagConstraints.WEST;
+		rootPanel.add(label1, gbc);
+		final JLabel label2 = new JLabel();
+		label2.setText("Zoom:");
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.WEST;
+		rootPanel.add(label2, gbc);
+		panXValue = new JTextField();
+		panXValue.setName("panX");
+		panXValue.setText("-0.2");
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		rootPanel.add(panXValue, gbc);
+		final JLabel label3 = new JLabel();
+		label3.setText("Pan on Imaginary:");
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 4;
+		gbc.anchor = GridBagConstraints.WEST;
+		rootPanel.add(label3, gbc);
+		panYValue = new JTextField();
+		panYValue.setName("panY");
+		panYValue.setText("0.01");
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 5;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		rootPanel.add(panYValue, gbc);
+		zoomValue = new JTextField();
+		zoomValue.setName("zoomValue");
+		zoomValue.setText("1.00");
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		rootPanel.add(zoomValue, gbc);
 	}
 
 	/**

@@ -2,10 +2,11 @@ package GUI;
 
 import images.ImageManager;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 /**
@@ -17,7 +18,7 @@ public class MandelbrotViewer extends JPanel {
 
 	private final ImageManager imageManager;
 
-	public MandelbrotViewer(ImageManager imageManager) {
+	MandelbrotViewer(ImageManager imageManager) {
 		super();
 		this.imageManager = imageManager;
 		

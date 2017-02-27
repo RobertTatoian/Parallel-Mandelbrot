@@ -1,14 +1,15 @@
 package images;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Vector;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  * Created by Robert Tatoian on 2/9/17.
+ * @author Robert Tatoian
+ *
+ * The ImageManager class handles most of the IO for writing images.
  */
 public class ImageManager {
 
@@ -24,17 +25,18 @@ public class ImageManager {
 		this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 		for (int i = 0; i < imageWidth; i++) {
 			for (int j = 0; j < imageHeight; j++) {
-				bufferedImage.setRGB(i, j, 16_777_215);
+				//noinspection NumericOverflow
+				bufferedImage.setRGB(i, j, (0xFF << 24) | (0x00FFFFFF));
 			}
 		}
 	}
 
 	public double scalePixelXToReal(int imageX) {
-		return (imageX - (imageWidth / 2f)) * (1f / (imageWidth / 4f));
+		return (imageX - (imageWidth / 2.0f)) * (1.0f / (imageWidth / 4.0f));
 	}
 
 	public double scalePixelYToImaginary(int imageY) {
-		return -1 * (imageY - (imageHeight / 2f)) * (1f / (imageHeight / 4f));
+		return -1 * (imageY - (imageHeight / 2.0f)) * (1.0f / (imageHeight / 4.0f));
 	}
 
 	public void setPixelAt(double x, double y, int color) {
@@ -66,7 +68,8 @@ public class ImageManager {
 			this.bufferedImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
 			for (int i = 0; i < imageWidth; i++) {
 				for (int j = 0; j < imageHeight; j++) {
-					bufferedImage.setRGB(i, j, 16_777_215);
+					//noinspection NumericOverflow
+					bufferedImage.setRGB(i, j, (0xFF << 24) | (0x00FFFFFF));
 				}
 			}
 		} else {
@@ -95,7 +98,7 @@ public class ImageManager {
 
 	}
 
-	public void writeImage(BufferedImage image) {
+	public static void writeImage(BufferedImage image) {
 
 		File imageFile = new File("Parallel.png");
 

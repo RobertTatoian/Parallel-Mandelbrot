@@ -17,16 +17,16 @@ public class Serial {
 		this.imageManager = imageManager;
 	}
 
-	public void iterateMandelbrot(double scaleX, double scaleY, double panX, double panY) {
+	public void iterateMandelbrot(double scale, double panX, double panY) {
 
 		imageManager.setFinishedDrawingImage(false);
 
 		ComplexNumber c = new ComplexNumber();
 
 		for (int i = 0; i < imageManager.getImageHeight(); i++) {
-			c.setImaginary(imageManager.scalePixelYToImaginary(i) * scaleY + panY);
+			c.setImaginary(imageManager.scalePixelYToImaginary(i) * scale + panY);
 			for (int j = 0; j < imageManager.getImageWidth(); j++) {
-				c.setReal(imageManager.scalePixelXToReal(j) * scaleX + panX);
+				c.setReal(imageManager.scalePixelXToReal(j) * scale + panX);
 				testBehavior(c, j, i);
 			}
 		}
@@ -43,6 +43,7 @@ public class Serial {
 		for (int k = 0; k < 1001; k++) {
 
 			if (!isInMandelbrot(m)) {
+				//noinspection NumericOverflow
 				imageManager.setPixelAt(i,j,(0xFF << 24)| (0x007F7F7F / (k + 1)));
 				break;
 			}
@@ -51,6 +52,7 @@ public class Serial {
 			z = m;
 
 			if (k == 1000) {
+				//noinspection NumericOverflow
 				imageManager.setPixelAt(i,j, (0xFF << 24));
 			}
 
