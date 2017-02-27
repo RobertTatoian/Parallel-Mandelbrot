@@ -155,6 +155,7 @@ public class UserInterface implements ActionListener {
 				mandelbrotViewer1.repaint();
 				break;
 			case "save":
+				imageManager.writeImage();
 				mandelbrotViewer1.repaint();
 				break;
 			case "plot":
@@ -258,6 +259,7 @@ public class UserInterface implements ActionListener {
 	}
 
 	private void serialImplementation() {
+
 		long t = System.currentTimeMillis();
 
 		Serial mandelbrot = new Serial(imageManager);
@@ -266,7 +268,6 @@ public class UserInterface implements ActionListener {
 
 		System.out.println("Total time serial execution: " + (System.currentTimeMillis() - t));
 
-		imageManager.writeImage();
 	}
 
 	private void parallelImplementation() {
@@ -280,13 +281,9 @@ public class UserInterface implements ActionListener {
 		Parallel.panX = parseInput(panXValue.getName(), panXValue.getText());
 		Parallel.panY = parseInput(panYValue.getName(), panYValue.getText());
 
-		t1
-				= new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight());
-		t2
-				= new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight());
-		t3
-				= new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight());
-
+		t1 = new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight());
+		t2 = new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight());
+		t3 = new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight());
 
 		long t = System.currentTimeMillis();
 
@@ -319,8 +316,6 @@ public class UserInterface implements ActionListener {
 		imageManager.setBufferedImage(finalImage);
 
 		imageManager.setFinishedDrawingImage(true);
-
-		ImageManager.writeImage(finalImage);
 	}
 
 	/**

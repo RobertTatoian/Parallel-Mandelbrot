@@ -87,7 +87,7 @@ public class ImageManager {
 	}
 
 	public void writeImage() {
-		File imageFile = new File("Serial.png");
+		File imageFile = new File("Mandelbrot Plot.png");
 
 		IIOImage iioImageWrapper = new IIOImage(bufferedImage, null, null);
 		try {
@@ -101,7 +101,7 @@ public class ImageManager {
 
 	public static void writeImage(BufferedImage image) {
 
-		File imageFile = new File("Parallel.png");
+		File imageFile = new File("Mandelbrot Plot.png");
 
 		IIOImage iioImageWrapper = new IIOImage(image, null, null);
 		try {
