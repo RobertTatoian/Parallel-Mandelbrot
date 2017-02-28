@@ -26,9 +26,9 @@ public class Parallel extends Thread {
 	private volatile AtomicInteger bottom_starting_X_T2 = new AtomicInteger(0);
 	private volatile AtomicInteger bottom_starting_Y_T2 = new AtomicInteger(0);
 
-	public volatile static double scale = 1;
-	public volatile static double panX = 0;
-	public volatile static double panY = 0;
+	private volatile static double scale = 1.0;
+	private volatile static double panX = 0.0;
+	private volatile static double panY = 0.0;
 
 	private Parallel(String threadName, ImageManager imageManager, AtomicInteger startingX, AtomicInteger startingY, AtomicInteger endingX, AtomicInteger endingY) {
 		super(threadName);
@@ -62,6 +62,30 @@ public class Parallel extends Thread {
 		//Each thread needs a blank buffered image.
 		slice = new BufferedImage(bottom_starting_X_T2.get() + 1, bottom_starting_Y_T2.get() + 1, BufferedImage.TYPE_INT_ARGB);
 
+	}
+
+	public static double getScale() {
+		return scale;
+	}
+
+	public static void setScale(double scale) {
+		Parallel.scale = scale;
+	}
+
+	public static double getPanX() {
+		return panX;
+	}
+
+	public static void setPanX(double panX) {
+		Parallel.panX = panX;
+	}
+
+	public static double getPanY() {
+		return panY;
+	}
+
+	public static void setPanY(double panY) {
+		Parallel.panY = panY;
 	}
 
 	@Override
@@ -99,7 +123,7 @@ public class Parallel extends Thread {
 				ComplexNumber top_c = new ComplexNumber();
 
 				for (; top_starting_Y_T1.get() < bottom_starting_Y_T2.get() ; top_starting_Y_T1.incrementAndGet()) {
-					top_c.setImaginary((-1 * (top_starting_Y_T1.get() - (imageManager.getImageHeight() / 2.0f)) * (1.0f / (imageManager.getImageHeight() / 4.0f))) * scale + panY);
+					top_c.setImaginary((-1 * (top_starting_Y_T1.get() - (imageManager.getImageHeight() / 2.0f)) * (1.0f / (imageManager.getImageHeight() / 4.0f))) * getScale() + getPanY());
 					for (int i = top_starting_X_T1.get(); i < bottom_starting_X_T2.get(); i++){
 						top_c.setReal(getRealFromPixel(i));
 						testBehavior(top_c, i, top_starting_Y_T1.get());
@@ -113,7 +137,7 @@ public class Parallel extends Thread {
 				ComplexNumber bottom_c = new ComplexNumber();
 
 				for (; bottom_starting_Y_T2.get() > top_starting_Y_T1.get(); bottom_starting_Y_T2.decrementAndGet()) {
-					bottom_c.setImaginary((-1 * (bottom_starting_Y_T2.get() - (imageManager.getImageHeight() / 2.0f)) * (1.0f / (imageManager.getImageHeight() / 4.0f))) * scale + panY);
+					bottom_c.setImaginary((-1 * (bottom_starting_Y_T2.get() - (imageManager.getImageHeight() / 2.0f)) * (1.0f / (imageManager.getImageHeight() / 4.0f))) * getScale() + getPanY());
 					for (int i = top_starting_X_T1.get(); i < bottom_starting_X_T2.get(); i++){
 						bottom_c.setReal(getRealFromPixel(i));
 						testBehavior(bottom_c, i, bottom_starting_Y_T2.get());
@@ -130,7 +154,7 @@ public class Parallel extends Thread {
 	}
 
 	private double getRealFromPixel(int i) {
-		return ((i - (imageManager.getImageWidth() / 2.0f)) * (1.0f / (imageManager.getImageWidth() / 4.0f))) * scale + panX;
+		return ((i - (imageManager.getImageWidth() / 2.0f)) * (1.0f / (imageManager.getImageWidth() / 4.0f))) * getScale() + getPanX();
 	}
 
 	private void testBehavior(ComplexNumber c, int widthX, int heightY) {

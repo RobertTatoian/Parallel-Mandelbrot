@@ -29,9 +29,10 @@ import java.awt.image.BufferedImage;
 
 /**
  * This class implements the GUI for the program. Note that there are methods which are created by the Intellij IDE in this class and they should not be altered.
+ *
  * @author Robert Tatoian
- * @since 02/15/2017
  * @version 1.0
+ * @since 02/15/2017
  */
 public class UserInterface implements ActionListener {
 
@@ -161,13 +162,14 @@ public class UserInterface implements ActionListener {
 				break;
 			case "plot":
 
-				if (isSerial) {
-					serialImplementation();
+				for (int i = 0; i < 60; i++) {
+					if (isSerial) {
+						serialImplementation();
+					}
+					else {
+						parallelImplementation();
+					}
 				}
-				else {
-					parallelImplementation();
-				}
-
 				mandelbrotViewer1.repaint();
 				break;
 			case "1000":
@@ -261,7 +263,7 @@ public class UserInterface implements ActionListener {
 
 	private void serialImplementation() {
 
-		FileManager serialWriter = new FileManager("Serial Times.txt");
+		FileManager serialWriter = new FileManager("Serial Times 2000.txt");
 
 		long t = System.currentTimeMillis();
 
@@ -275,33 +277,43 @@ public class UserInterface implements ActionListener {
 
 	private void parallelImplementation() {
 
-		FileManager parallelWriter = new FileManager("Parallel Times.txt");
+		FileManager parallelWriter = new FileManager("Parallel Times 2000.txt");
 
-		Parallel t1, t2, t3;
+		Parallel t1, t2, t3, t4, t5, t6;
 
-		int imageSlice = imageManager.getImageHeight();
-		System.out.println(Runtime.getRuntime().availableProcessors());
-		System.out.println(imageSlice);
+		int imageSlice = imageManager.getImageHeight() / 3;
 
-		Parallel.scale = parseInput(zoomValue.getName(), zoomValue.getText());
-		Parallel.panX = parseInput(panXValue.getName(), panXValue.getText());
-		Parallel.panY = parseInput(panYValue.getName(), panYValue.getText());
+		Parallel.setScale(parseInput(zoomValue.getName(), zoomValue.getText()));
+		Parallel.setPanX(parseInput(panXValue.getName(), panXValue.getText()));
+		Parallel.setPanY(parseInput(panYValue.getName(), panYValue.getText()));
 
-		t1 = new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight());
-		t2 = new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight());
-		t3 = new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight());
+		t1 = new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight() / 2);
+		t2 = new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight() / 2);
+		t3 = new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight() / 2);
+
+		t4
+				= new Parallel("daemon", imageManager, 0, imageManager.getImageHeight() / 2, imageSlice, imageManager.getImageHeight());
+		t5
+				= new Parallel("daemon", imageManager, imageSlice, imageManager.getImageHeight() / 2, imageSlice * 2, imageManager.getImageHeight());
+		t6
+				= new Parallel("daemon", imageManager, imageSlice * 2, imageManager.getImageHeight() / 2, imageSlice * 3, imageManager.getImageHeight());
 
 		long t = System.currentTimeMillis();
 
 		t1.start();
 		t2.start();
 		t3.start();
-
+		t4.start();
+		t5.start();
+		t6.start();
 
 		try {
 			t1.join();
 			t2.join();
 			t3.join();
+			t4.join();
+			t5.join();
+			t6.join();
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
@@ -318,6 +330,9 @@ public class UserInterface implements ActionListener {
 		graphics.drawImage(t1.slice, 0, 0, null);
 		graphics.drawImage(t2.slice, 0, 0, null);
 		graphics.drawImage(t3.slice, 0, 0, null);
+		graphics.drawImage(t4.slice, 0, 0, null);
+		graphics.drawImage(t5.slice, 0, 0, null);
+		graphics.drawImage(t6.slice, 0, 0, null);
 
 		imageManager.setBufferedImage(finalImage);
 
