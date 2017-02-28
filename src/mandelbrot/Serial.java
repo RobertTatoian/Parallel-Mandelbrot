@@ -15,10 +15,20 @@ public class Serial {
 	 */
 	private ImageManager imageManager;
 
+	/**
+	 * Create an instance of the serial Mandelbrot
+	 * @param imageManager A reference to the image manager
+	 */
 	public Serial(ImageManager imageManager) {
 		this.imageManager = imageManager;
 	}
 
+	/**
+	 * Iterate over the pixels of the image.
+	 * @param scale The zoom factor.
+	 * @param panX The pan on the X axis.
+	 * @param panY The pan on the Y axis.
+	 */
 	public void iterateMandelbrot(double scale, double panX, double panY) {
 
 		imageManager.setFinishedDrawingImage(false);
@@ -37,14 +47,20 @@ public class Serial {
 
 	}
 
+	/**
+	 * Tests if a point is inside the Mandelbrot set. If it is then the appropriate location in the BufferedImage is set.
+	 * @param c An instance of a complex number.
+	 * @param i The position along the width of the image.
+	 * @param j The position along the height of the image.
+	 */
 	private void testBehavior(ComplexNumber c, int i, int j) {
 		ComplexNumber z = new ComplexNumber();
 		ComplexNumber m;
 		m = ComplexNumber.add(z.square(), c);
 
-		for (int k = 0; k < 1001; k++) {
+		for (int k = 1; k < 1002; k++) {
 
-			if (!isInMandelbrot(m)) {
+			if (m.magnitude() > 2) {
 				//noinspection NumericOverflow
 				imageManager.setPixelAt(i,j,(0xFF << 24)| (0x007F7F7F / (k + 1)));
 				break;
@@ -53,18 +69,12 @@ public class Serial {
 			m = ComplexNumber.add(z.square(), c);
 			z = m;
 
-			if (k == 1000) {
+			if (k == 1001) {
 				//noinspection NumericOverflow
 				imageManager.setPixelAt(i,j, (0xFF << 24));
 			}
 
 		}
-	}
-
-	private static boolean isInMandelbrot(ComplexNumber mComplex) {
-
-		return !(mComplex.magnitude() > 2);
-
 	}
 
 }

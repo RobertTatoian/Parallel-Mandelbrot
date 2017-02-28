@@ -39,7 +39,9 @@ public class UserInterface implements ActionListener {
 	private boolean isSerial = true;
 	private static final int imageWidth = 1000;
 	private static final int imageHeight = 1000;
+	private int numberOfThreads = 1;
 
+	//Several UI items
 	private JFrame frame;
 	private JPanel rootPanel;
 	private MandelbrotViewer mandelbrotViewer1;
@@ -57,6 +59,7 @@ public class UserInterface implements ActionListener {
 
 		JFrame.setDefaultLookAndFeelDecorated(true);
 
+		//Creating a new window
 		frame = new JFrame("Serial Set");
 		JMenuBar menuBar = new JMenuBar();
 
@@ -118,6 +121,31 @@ public class UserInterface implements ActionListener {
 		eightThousand.addActionListener(this);
 		size.add(eightThousand);
 
+		JMenu threads = new JMenu("Threads");
+		menuBar.add(threads);
+
+		ButtonGroup threadsGroup = new ButtonGroup();
+		JRadioButtonMenuItem twoThreads = new JRadioButtonMenuItem("2 Threads");
+		twoThreads.setSelected(true);
+		threadsGroup.add(twoThreads);
+		twoThreads.setActionCommand("two");
+		twoThreads.addActionListener(this);
+		threads.add(twoThreads);
+
+		JRadioButtonMenuItem fourThreads = new JRadioButtonMenuItem("4 Threads");
+		fourThreads.setSelected(true);
+		threadsGroup.add(fourThreads);
+		fourThreads.setActionCommand("four");
+		fourThreads.addActionListener(this);
+		threads.add(fourThreads);
+
+		JRadioButtonMenuItem sixThreads = new JRadioButtonMenuItem("6 Threads");
+		sixThreads.setSelected(true);
+		threadsGroup.add(sixThreads);
+		sixThreads.setActionCommand("four");
+		sixThreads.addActionListener(this);
+		threads.add(sixThreads);
+
 		//Auto-Created function by Intellij
 		$$$setupUI$$$();
 
@@ -148,6 +176,15 @@ public class UserInterface implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
+			case "two":
+				numberOfThreads = 1;
+				break;
+			case "four":
+				numberOfThreads = 2;
+				break;
+			case "six":
+				numberOfThreads = 3;
+				break;
 			case "serial":
 				isSerial = true;
 				mandelbrotViewer1.repaint();
@@ -162,14 +199,13 @@ public class UserInterface implements ActionListener {
 				break;
 			case "plot":
 
-				for (int i = 0; i < 60; i++) {
-					if (isSerial) {
-						serialImplementation();
-					}
-					else {
-						parallelImplementation();
-					}
+				if (isSerial) {
+					serialImplementation();
 				}
+				else {
+					parallelImplementation();
+				}
+
 				mandelbrotViewer1.repaint();
 				break;
 			case "1000":
@@ -239,6 +275,12 @@ public class UserInterface implements ActionListener {
 
 	}
 
+	/**
+	 * Parse any imput from the text boxes into actual numbers.
+	 * @param sender The text box that sent the call.
+	 * @param input Whatever the input to the text box was.
+	 * @return The double prevision representation of input.
+	 */
 	private double parseInput(String sender, String input) {
 
 		double number;
@@ -261,9 +303,12 @@ public class UserInterface implements ActionListener {
 		return number;
 	}
 
+	/**
+	 * Creates an instance of the serial Mandelbrot implementation.
+	 */
 	private void serialImplementation() {
 
-		FileManager serialWriter = new FileManager("Serial Times 2000.txt");
+		FileManager serialWriter = new FileManager("Serial Times.txt");
 
 		long t = System.currentTimeMillis();
 
@@ -275,45 +320,58 @@ public class UserInterface implements ActionListener {
 
 	}
 
+	/**
+	 * Creates an instance of the parallel Mandelbrot implemenation.
+	 */
 	private void parallelImplementation() {
 
-		FileManager parallelWriter = new FileManager("Parallel Times 2000.txt");
+		FileManager parallelWriter = new FileManager("Parallel Times.txt");
 
-		Parallel t1, t2, t3, t4, t5, t6;
+		Parallel t1, t2, t3;
 
-		int imageSlice = imageManager.getImageHeight() / 3;
+		int imageSlice = imageManager.getImageHeight() / numberOfThreads;
 
 		Parallel.setScale(parseInput(zoomValue.getName(), zoomValue.getText()));
 		Parallel.setPanX(parseInput(panXValue.getName(), panXValue.getText()));
 		Parallel.setPanY(parseInput(panYValue.getName(), panYValue.getText()));
 
-		t1 = new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight() / 2);
-		t2 = new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight() / 2);
-		t3 = new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight() / 2);
+		long t;
 
-		t4
-				= new Parallel("daemon", imageManager, 0, imageManager.getImageHeight() / 2, imageSlice, imageManager.getImageHeight());
-		t5
-				= new Parallel("daemon", imageManager, imageSlice, imageManager.getImageHeight() / 2, imageSlice * 2, imageManager.getImageHeight());
-		t6
-				= new Parallel("daemon", imageManager, imageSlice * 2, imageManager.getImageHeight() / 2, imageSlice * 3, imageManager.getImageHeight());
+		t1 = new Parallel("daemon", imageManager, 0, 0, imageSlice, imageManager.getImageHeight());
+		t2 = new Parallel("daemon", imageManager, imageSlice, 0, imageSlice * 2, imageManager.getImageHeight());
+		t3 = new Parallel("daemon", imageManager, imageSlice * 2, 0, imageSlice * 3, imageManager.getImageHeight());
 
-		long t = System.currentTimeMillis();
+		//Determine how many threads to start.
+		switch (numberOfThreads) {
+			case 1:
+				t = System.currentTimeMillis();
+				t1.start();
+				break;
+			case 2:
+				t = System.currentTimeMillis();
 
-		t1.start();
-		t2.start();
-		t3.start();
-		t4.start();
-		t5.start();
-		t6.start();
+				t1.start();
+				t2.start();
+				break;
+			case 3:
+				t = System.currentTimeMillis();
 
+				t1.start();
+				t2.start();
+				t3.start();
+				break;
+			default:
+				t = System.currentTimeMillis();
+
+				t1.start();
+				break;
+		}
+
+		//Join the threads.
 		try {
 			t1.join();
 			t2.join();
 			t3.join();
-			t4.join();
-			t5.join();
-			t6.join();
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
@@ -323,6 +381,7 @@ public class UserInterface implements ActionListener {
 
 		imageManager.setFinishedDrawingImage(false);
 
+		//Combine the images together.
 		BufferedImage finalImage
 				= new BufferedImage(imageManager.getImageWidth(), imageManager.getImageHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics graphics = finalImage.getGraphics();
@@ -330,9 +389,7 @@ public class UserInterface implements ActionListener {
 		graphics.drawImage(t1.slice, 0, 0, null);
 		graphics.drawImage(t2.slice, 0, 0, null);
 		graphics.drawImage(t3.slice, 0, 0, null);
-		graphics.drawImage(t4.slice, 0, 0, null);
-		graphics.drawImage(t5.slice, 0, 0, null);
-		graphics.drawImage(t6.slice, 0, 0, null);
+
 
 		imageManager.setBufferedImage(finalImage);
 
